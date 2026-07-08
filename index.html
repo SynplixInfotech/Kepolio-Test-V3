@@ -38,6 +38,23 @@
 
 <body>
 
+  <!-- ═══════════════ PARTICLE CANVAS ═══════════════ -->
+  <canvas id="particles"></canvas>
+
+  <!-- ═══════════════ GRADIENT MESH ═══════════════ -->
+  <div class="gradient-mesh" id="gradientMesh"></div>
+
+  <!-- ═══════════════ LOADING OVERLAY ═══════════════ -->
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="loader-logo" id="loaderLogo">
+      <span class="logo-k">K</span><span class="logo-e">e</span><span class="logo-p">P</span><span class="logo-o">o</span><span class="logo-l">l</span><span class="logo-i">i</span><span class="logo-o2">o</span>
+    </div>
+    <div class="loader-tagline" id="loaderTagline"></div>
+    <div class="loader-bar">
+      <div class="loader-bar-fill" id="loaderBarFill"></div>
+    </div>
+  </div>
+
   <!-- ═══════════════ NAVBAR ═══════════════ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
@@ -48,12 +65,13 @@
             <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </span>
-        <span class="logo-k" style="color: var(--text-primary);">Ke</span><span class="logo-p" style="color: var(--accent-blue);">P</span><span class="logo-rest" style="color: var(--text-primary);">olio</span>
+        KePolio
       </a>
       <div class="nav-actions">
         <div class="nav-links" id="navLinks">
           <a href="#features" class="nav-link">Features</a>
           <a href="#how-it-works" class="nav-link">How It Works</a>
+          <a href="#settings" class="nav-link">Settings</a>
           <a href="/public/explore.html" class="nav-link">Explore</a>
           <a href="/public/auth.html" class="btn-primary btn-nav" id="navCta">
             Get Started
@@ -304,6 +322,27 @@
           </div>
           <h3>Share Your KePolio</h3>
           <p>Get a unique KEP code and professional profile link to share anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ THEME SETTINGS SECTION ═══════════════ -->
+  <section class="theme-settings reveal" id="settings">
+    <div class="section-inner">
+      <div class="theme-settings-card glass-panel">
+        <div>
+          <span class="section-label">Settings</span>
+          <h2>Theme <span class="accent">Preference</span></h2>
+          <p class="section-subheading">Choose your preferred mode. Default is light mode.</p>
+        </div>
+        <div class="theme-options" role="radiogroup" aria-label="Theme preference">
+          <button class="theme-option active" type="button" data-theme-choice="light" aria-pressed="true">
+            <span class="theme-option__icon">☀️</span> Light
+          </button>
+          <button class="theme-option" type="button" data-theme-choice="dark" aria-pressed="false">
+            <span class="theme-option__icon">🌙</span> Dark
+          </button>
         </div>
       </div>
     </div>
