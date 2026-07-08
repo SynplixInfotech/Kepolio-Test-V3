@@ -19,8 +19,7 @@
     }
 
     if (!username) {
-        if (window.CaseLoader) window.CaseLoader.dismiss().then(showNotFound);
-        else showNotFound();
+        showNotFound();
         return;
     }
 
@@ -32,10 +31,6 @@
             const data = await DataService.getPublicProfile(uname);
 
             if (!data.found) {
-                // Dismiss loader then show not-found
-                if (window.CaseLoader) {
-                    await window.CaseLoader.dismiss();
-                }
                 showNotFound();
                 return;
             }
@@ -61,27 +56,11 @@
             // Owner detection (non-blocking)
             detectOwner(data.user.uid);
 
-            // ── Dismiss the cinematic loader, THEN reveal sections ──
-            if (window.CaseLoader) {
-                await window.CaseLoader.dismiss();
-            }
-
-            // Sequential reveal
-            revealSections();
-
-            // Card scroll animations
-            initScrollReveal();
-
             // Certificate modal events
             initCertModal();
 
-            // Views are already incremented inside getPublicProfile
-
         } catch (err) {
             console.error('Failed to load profile:', err);
-            if (window.CaseLoader) {
-                await window.CaseLoader.dismiss();
-            }
             showNotFound();
         }
     }
@@ -483,49 +462,6 @@
             if (e.key === 'Escape' && modal.style.display !== 'none') {
                 closeModal();
             }
-        });
-    }
-
-    /* ═══════════════ SECTION REVEAL ═══════════════ */
-    function revealSections() {
-        const delays = [
-            ['profileHero', 100],
-            ['socialsSection', 300],
-            ['journeySection', 500],
-            ['projectsSection', 700],
-            ['certsSection', 900],
-            ['qualsSection', 1100],
-            ['expsSection', 1300],
-        ];
-        delays.forEach(([id, ms]) => {
-            setTimeout(() => {
-                document.getElementById(id)?.classList.add('visible');
-            }, ms);
-        });
-    }
-
-    /* ═══════════════ SCROLL REVEAL ═══════════════ */
-    function initScrollReveal() {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry, i) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, i * 80);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-
-        document.querySelectorAll('.pub-project-card, .pub-cert-card, .social-link-card, .pub-qual-card, .pub-exp-card, .journey-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(16px)';
-            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-            observer.observe(card);
         });
     }
 

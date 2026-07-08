@@ -40,43 +40,8 @@
     </div>
   </div>
 
-  <!-- ═══════════ PROFILE LOADER ═══════════ -->
-  <div class="case-loader" id="caseLoader" aria-label="Loading profile" role="status">
-
-    <!-- Typewriter status line -->
-    <div class="case-loader__status">
-      <div class="case-loader__phrase" id="loaderPhrase"></div>
-      <div class="case-loader__cursor">|</div>
-    </div>
-
-    <!-- Progress bar -->
-    <div class="case-loader__bar-wrap">
-      <div class="case-loader__bar" id="loaderBar"></div>
-      <div class="case-loader__bar-glow"></div>
-    </div>
-
-    <!-- Corner HUD decorations -->
-    <div class="case-loader__hud case-loader__hud--tl">
-      <div class="hud-bracket hud-bracket--tl"></div>
-      <span class="hud-text">KePolio</span>
-    </div>
-    <div class="case-loader__hud case-loader__hud--tr">
-      <span class="hud-text">v2.0</span>
-      <div class="hud-bracket hud-bracket--tr"></div>
-    </div>
-    <div class="case-loader__hud case-loader__hud--bl">
-      <div class="hud-bracket hud-bracket--bl"></div>
-      <span class="hud-text" id="hudStatus">FETCHING</span>
-    </div>
-    <div class="case-loader__hud case-loader__hud--br">
-      <span class="hud-text" id="hudPct">0%</span>
-      <div class="hud-bracket hud-bracket--br"></div>
-    </div>
-
-  </div>
-
   <!-- ═══════════════ PROFILE CONTENT ═══════════════ -->
-  <div class="profile" id="profileContainer" style="display:none">
+  <div class="profile" id="profileContainer">
   </div>
 
   <!-- ═══════════════ NOT FOUND ═══════════════ -->
@@ -232,8 +197,6 @@
   <script src="js/data-service.js" defer></script>
   <script src="js/auth.js" defer></script>
   <script src="js/utils.js" defer></script>
-  <!-- Loader engine runs before profile logic -->
-  <script src="js/loader.js"></script>
   <script src="js/profile.js" defer></script>
 </body>
 
