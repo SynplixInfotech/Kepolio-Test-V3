@@ -39,3 +39,7 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 .opencode/
+.codex/
+.agents/
+project-brain/
+.gitignore

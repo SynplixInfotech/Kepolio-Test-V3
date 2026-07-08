@@ -52,7 +52,7 @@
             if (result.found) {
                 // Brief pause for visual feedback
                 await new Promise(r => setTimeout(r, 400));
-                window.location.href = `/public/profile.html?u=${result.username}`;
+                window.location.href = `/@${result.username}`;
             } else {
                 showError('Code not found. Check and try again.');
                 btn.innerHTML = 'View Profile <span>→</span>';

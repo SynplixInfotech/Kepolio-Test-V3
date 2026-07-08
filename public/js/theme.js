@@ -1,10 +1,11 @@
 (function () {
     'use strict';
 
-    const THEME_KEY = 'case-theme';
+    const THEME_KEY = 'kepolio-theme';
+    const LEGACY_THEME_KEY = 'case-theme';
 
     function getTheme() {
-        const saved = localStorage.getItem(THEME_KEY);
+        const saved = localStorage.getItem(THEME_KEY) || localStorage.getItem(LEGACY_THEME_KEY);
         return saved === 'dark' ? 'dark' : 'light';
     }
 
@@ -24,7 +25,10 @@
     function applyTheme(theme, persist = true) {
         const normalized = theme === 'dark' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', normalized);
-        if (persist) localStorage.setItem(THEME_KEY, normalized);
+        if (persist) {
+            localStorage.setItem(THEME_KEY, normalized);
+            localStorage.removeItem(LEGACY_THEME_KEY);
+        }
         updateThemeMeta();
 
         document.querySelectorAll('[data-theme-toggle]').forEach((button) => updateButton(button, normalized));

@@ -155,6 +155,7 @@
 
     // ─── Theme Controls ───
     const THEME_KEY = 'kepolio-theme';
+    const LEGACY_THEME_KEY = 'case-theme';
 
     function updateThemeControlState(theme) {
         if (DOM.themeToggleIcon) DOM.themeToggleIcon.textContent = theme === 'dark' ? '☀' : '🌙';
@@ -179,11 +180,14 @@
             if (color) metaTheme.setAttribute('content', color);
         }
 
-        if (persist) localStorage.setItem(THEME_KEY, finalTheme);
+        if (persist) {
+            localStorage.setItem(THEME_KEY, finalTheme);
+            localStorage.removeItem(LEGACY_THEME_KEY);
+        }
     }
 
     function initTheme() {
-        const storedTheme = localStorage.getItem(THEME_KEY);
+        const storedTheme = localStorage.getItem(THEME_KEY) || localStorage.getItem(LEGACY_THEME_KEY);
         applyTheme(storedTheme || 'light', false);
 
         DOM.themeToggle?.addEventListener('click', () => {

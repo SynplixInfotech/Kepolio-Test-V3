@@ -70,7 +70,7 @@
         $('#logoutBtn')?.addEventListener('click', async () => {
             await AuthService.logout();
             Utils.toast('Logged out', 'success');
-            setTimeout(() => window.location.href = '/public/auth.html', 800);
+            setTimeout(() => window.location.href = '/auth', 800);
         });
     }
 
@@ -148,11 +148,11 @@
         const profileUrl = `kepolio.app/@${user.username}`;
         $('#overviewCode').textContent = user.caseCode || '---';
         $('#overviewLink').textContent = profileUrl;
-        $('#overviewLink').href = `/public/profile.html?u=${user.username}`;
-        $('#viewProfileBtn').href = `/public/profile.html?u=${user.username}`;
+        $('#overviewLink').href = `/@${user.username}`;
+        $('#viewProfileBtn').href = `/@${user.username}`;
 
         // QR Code
-        Utils.generateQR($('#overviewQR'), window.location.origin + `/public/profile.html?u=${user.username}`, 100);
+        Utils.generateQR($('#overviewQR'), window.location.origin + `/@${user.username}`, 100);
 
         // Copy handlers
         Utils.initCopyButton($('#overviewCopyCode'), () => user.caseCode);
@@ -917,7 +917,7 @@
             DataService.getCertificates(),
         ]);
         const profileUrl = `kepolio.app/@${user.username}`;
-        const fullUrl = window.location.origin + `/public/profile.html?u=${user.username}`;
+        const fullUrl = window.location.origin + `/@${user.username}`;
 
         $('#caseCodeDisplay').textContent = user.caseCode || '---';
         $('#caseCodeLink').textContent = profileUrl;

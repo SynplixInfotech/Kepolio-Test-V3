@@ -180,7 +180,7 @@ const AuthService = (() => {
     async function requireAuth() {
         const user = await waitForAuth();
         if (!user) {
-            window.location.href = '/public/auth.html';
+            window.location.href = '/auth';
             return null;
         }
         return user;
@@ -193,7 +193,7 @@ const AuthService = (() => {
     async function redirectIfAuth() {
         const user = await waitForAuth();
         if (user) {
-            window.location.href = '/public/dashboard.html';
+            window.location.href = '/dashboard';
             return true;
         }
         return false;

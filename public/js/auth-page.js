@@ -143,7 +143,7 @@
         setLoading(loginBtn, true);
         try {
             await AuthService.login(email, password);
-            window.location.href = '/public/dashboard.html';
+            window.location.href = '/dashboard';
         } catch (err) {
             loginError.textContent = AuthService.getErrorMessage(err);
         } finally {
@@ -179,7 +179,7 @@
         setLoading(signupBtn, true);
         try {
             await AuthService.signUp(email, password, fullName, username);
-            window.location.href = '/public/dashboard.html';
+            window.location.href = '/dashboard';
         } catch (err) {
             signupError.textContent = AuthService.getErrorMessage(err);
         } finally {
@@ -225,7 +225,7 @@
                 // New user — need to pick a username
                 showCard('googleUsername');
             } else {
-                window.location.href = '/public/dashboard.html';
+                window.location.href = '/dashboard';
             }
         } catch (err) {
             errorEl.textContent = AuthService.getErrorMessage(err);
@@ -301,7 +301,7 @@
         setLoading(googleUsernameBtn, true);
         try {
             await AuthService.completeGoogleSignUp(username);
-            window.location.href = '/public/dashboard.html';
+            window.location.href = '/dashboard';
         } catch (err) {
             googleUsernameError.textContent = AuthService.getErrorMessage(err);
         } finally {
