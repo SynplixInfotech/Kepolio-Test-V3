@@ -91,6 +91,23 @@
   --shadow-panel: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
+/* ─── Theme-Aware Logos ─── */
+.logo-light {
+  display: block;
+}
+
+.logo-dark {
+  display: none;
+}
+
+:root[data-theme='dark'] .logo-light {
+  display: none;
+}
+
+:root[data-theme='dark'] .logo-dark {
+  display: block;
+}
+
 /* ─── Reset & Globals ─── */
 *, *::before, *::after {
   margin: 0;
