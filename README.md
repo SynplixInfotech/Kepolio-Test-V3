@@ -1,26 +1,60 @@
 # KePolio
 
-Know Everyone's Portfolio — a portfolio showcase platform for students across all streams. Build your profile, add your work, and share it with recruiters instantly.
+**Know Everyone's Portfolio** — a portfolio showcase platform for students across all streams. Build your profile, add your work, and share it with recruiters instantly.
+
+## Live Demo
+
+**[kepolio.vercel.app](https://kepolio.vercel.app)**
+
+## Features
+
+- **Multi-stream profiles** — Arts, Commerce, Science, Engineering, and more
+- **Public portfolio pages** — Shareable via clean URLs (`/@username`)
+- **Case codes** — Unique shareable codes (`KEP-XXXXX`) for quick profile access
+- **Light/dark theme** — System-aware with manual toggle
+- **Fully static** — No server runtime; Firebase handles auth, database, and storage
+- **Mobile-first** — Responsive across all devices
 
 ## Quick Start
 
-1. Clone the repo
-2. Open `index.html` in a browser (or use a local server):
+```bash
+# Clone the repo
+git clone https://github.com/SynplixInfotech/KePolio---Know-Everyone-s-Portfolio.git
+cd KePolio---Know-Everyone-s-Portfolio
+
+# Serve locally
+npx serve .
+```
+
+Open `http://localhost:3000` in your browser.
+
+### Firebase Setup (required for auth & dashboard)
+
+1. Copy the example config:
    ```bash
-   npx serve .
+   cp public/js/firebase-env.example.js public/js/firebase-env.js
    ```
-3. For full app functionality (auth, dashboard), set up Firebase:
-   - Copy `public/js/firebase-env.example.js` to `public/js/firebase-env.js`
-   - Fill in your Firebase project credentials
+2. Fill in your Firebase project credentials in `firebase-env.js`
+3. Or set Vercel environment variables (see [Deployment](#deployment))
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `npm run build` | Generate `firebase-env.js` from Vercel environment variables |
+| `npm run build` | Generate `firebase-env.js` from Vercel env vars |
 | `npx serve .` | Start local static file server |
+| `firebase deploy --only firestore:rules` | Deploy Firestore security rules |
 
 ## Architecture
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | Vanilla JS (no framework), CSS custom properties |
+| Backend | Firebase Auth + Firestore (BaaS) |
+| Image uploads | Cloudinary |
+| Hosting | Vercel (CDN, clean URLs, security headers) |
 
 ### Project Structure
 
@@ -69,15 +103,6 @@ Know Everyone's Portfolio — a portfolio showcase platform for students across 
 └── firestore.rules             # Firestore security rules
 ```
 
-### Key Design Decisions
-
-- **Static site + Firebase BaaS** — Zero server runtime; Firebase handles auth, database, and storage. See [ADR-001](docs/decisions/ADR-001-static-site-with-firebase-baas.md).
-- **Vanilla JS (no framework)** — IIFE module pattern for namespace isolation without a bundler. See [ADR-004](docs/decisions/ADR-004-vanilla-js-no-framework.md).
-- **Vercel hosting** — Clean URLs via rewrite rules, CDN delivery, security headers. See [ADR-003](docs/decisions/ADR-003-vercel-hosting-with-rewrites.md).
-- **Linear-inspired design** — CSS custom properties for theme switching, Inter typeface, indigo-violet accent. See [ADR-005](docs/decisions/ADR-005-linear-inspired-design-system.md).
-
-Full ADR index: [docs/decisions/](docs/decisions/)
-
 ### Firestore Data Model
 
 ```
@@ -91,17 +116,41 @@ caseCodes/{KEP-XXXXX}  → { uid }    # Shareable code lookup
 usernames/{username}    → { uid }    # Username lookup
 ```
 
-Security rules enforce: public reads, owner-only writes. See [firestore.rules](firestore.rules).
+Security rules enforce public reads, owner-only writes. See [firestore.rules](firestore.rules).
+
+### Key Design Decisions
+
+- **Static site + Firebase BaaS** — Zero server runtime; Firebase handles auth, database, and storage. See [ADR-001](docs/decisions/ADR-001-static-site-with-firebase-baas.md).
+- **Vanilla JS (no framework)** — IIFE module pattern for namespace isolation without a bundler. See [ADR-004](docs/decisions/ADR-004-vanilla-js-no-framework.md).
+- **Vercel hosting** — Clean URLs via rewrite rules, CDN delivery, security headers. See [ADR-003](docs/decisions/ADR-003-vercel-hosting-with-rewrites.md).
+- **Linear-inspired design** — CSS custom properties for theme switching, Inter typeface, indigo-violet accent. See [ADR-005](docs/decisions/ADR-005-linear-inspired-design-system.md).
+
+Full ADR index: [docs/decisions/](docs/decisions/)
 
 ## Deployment
 
-The site deploys automatically to Vercel on push to the main branch. The build step only generates `firebase-env.js` from Vercel environment variables.
+The site deploys automatically to Vercel on push to the `main` branch. The build step only generates `firebase-env.js` from Vercel environment variables.
 
-Required Vercel environment variables:
-- `FIREBASE_API_KEY`
-- `FIREBASE_AUTH_DOMAIN`
-- `FIREBASE_PROJECT_ID`
-- `FIREBASE_STORAGE_BUCKET`
-- `FIREBASE_MESSAGING_SENDER_ID`
-- `FIREBASE_APP_ID`
-- `FIREBASE_MEASUREMENT_ID`
+### Required Vercel Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `FIREBASE_API_KEY` | Firebase API key |
+| `FIREBASE_AUTH_DOMAIN` | Firebase auth domain |
+| `FIREBASE_PROJECT_ID` | Firebase project ID |
+| `FIREBASE_STORAGE_BUCKET` | Firebase storage bucket |
+| `FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID |
+| `FIREBASE_APP_ID` | Firebase app ID |
+| `FIREBASE_MEASUREMENT_ID` | Firebase measurement ID |
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m "feat: add your feature"`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is proprietary. All rights reserved.
