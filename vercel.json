@@ -14,7 +14,7 @@
     { "source": "/careers", "destination": "/public/careers.html" },
     { "source": "/privacy", "destination": "/public/privacy.html" },
     { "source": "/terms", "destination": "/public/terms.html" },
-    { "source": "^/@(?<username>[^/]+)$", "destination": "/public/profile.html?u=$username" }
+    { "source": "/@:username", "destination": "/public/profile.html?u=:username" }
   ],
   "headers": [
     {
