@@ -91,21 +91,14 @@
   --shadow-panel: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-/* ─── Theme-Aware Logos ─── */
-.logo-light {
-  display: block;
+/* ─── Text Logo ─── */
+.logo-k,
+.logo-rest {
+  color: var(--text-primary);
 }
 
-.logo-dark {
-  display: none;
-}
-
-:root[data-theme='dark'] .logo-light {
-  display: none;
-}
-
-:root[data-theme='dark'] .logo-dark {
-  display: block;
+.logo-p {
+  color: var(--accent-blue);
 }
 
 /* ─── Reset & Globals ─── */

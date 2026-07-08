@@ -72,21 +72,14 @@
   --shadow-glow: 0 0 30px rgba(94, 106, 210, 0.24);
 }
 
-/* ─── Theme-Aware Logos ─── */
-.logo-light {
-  display: block;
+/* ─── Text Logo ─── */
+.logo-k,
+.logo-rest {
+  color: var(--text-primary);
 }
 
-.logo-dark {
-  display: none;
-}
-
-:root[data-theme='dark'] .logo-light {
-  display: none;
-}
-
-:root[data-theme='dark'] .logo-dark {
-  display: block;
+.logo-p {
+  color: var(--accent-blue);
 }
 
 /* ─── Reset ─── */
