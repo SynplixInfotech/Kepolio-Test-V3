@@ -9,6 +9,57 @@
 
     const container = document.getElementById('profileContainer');
 
+    // ── Profile Loader ──
+    const profileLoader = document.getElementById('profileLoader');
+    const profileLoaderLogo = document.getElementById('profileLoaderLogo');
+    const profileLoaderTagline = document.getElementById('profileLoaderTagline');
+    const profileLoaderBarFill = document.getElementById('profileLoaderBarFill');
+
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function typeWriter(element, text, speed = 55) {
+        return new Promise(resolve => {
+            let i = 0;
+            element.textContent = '';
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    resolve();
+                }
+            }
+            type();
+        });
+    }
+
+    async function runProfileLoader() {
+        // Step 1: Show loader with logo animation
+        await delay(100);
+        profileLoaderLogo.classList.add('visible');
+
+        // Step 2: Type tagline
+        await delay(600);
+        await typeWriter(profileLoaderTagline, "Know Everyone's Portfolio", 40);
+
+        // Step 3: Animate progress bar
+        await delay(200);
+        profileLoaderBarFill.style.width = '100%';
+
+        // Step 4: Wait for profile data, then hide loader
+        await delay(400);
+    }
+
+    function hideProfileLoader() {
+        profileLoader.classList.add('hidden');
+    }
+
+    // Start loader animation
+    runProfileLoader();
+
     // ── Extract username from URL ──
     // Supports both ?u=username and /@username (Vercel rewrite)
     const params = new URLSearchParams(window.location.search);
@@ -19,6 +70,7 @@
     }
 
     if (!username) {
+        hideProfileLoader();
         showNotFound();
         return;
     }
@@ -59,8 +111,12 @@
             // Certificate modal events
             initCertModal();
 
+            // Hide loader after profile is rendered
+            hideProfileLoader();
+
         } catch (err) {
             console.error('Failed to load profile:', err);
+            hideProfileLoader();
             showNotFound();
         }
     }

@@ -1,7 +1,99 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Public Profile Styles (Redesigned)
+   KePolio — Public Profile Styles (Redesigned)
    Section-based layout with certificate preview
    ═══════════════════════════════════════════════════ */
+
+/* ─── Profile Loader ─── */
+.profile-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.profile-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.profile-loader__logo {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.profile-loader__logo.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.profile-loader__logo .logo-k,
+.profile-loader__logo .logo-e,
+.profile-loader__logo .logo-o,
+.profile-loader__logo .logo-l,
+.profile-loader__logo .logo-i,
+.profile-loader__logo .logo-o2 {
+  color: var(--text-primary);
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: letterReveal 0.4s ease forwards;
+}
+.profile-loader__logo .logo-k { animation-delay: 0.1s; }
+.profile-loader__logo .logo-e { animation-delay: 0.15s; }
+.profile-loader__logo .logo-p { 
+  color: var(--accent-blue);
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: letterReveal 0.4s ease forwards;
+  animation-delay: 0.2s;
+}
+.profile-loader__logo .logo-o { animation-delay: 0.25s; }
+.profile-loader__logo .logo-l { animation-delay: 0.3s; }
+.profile-loader__logo .logo-i { animation-delay: 0.35s; }
+.profile-loader__logo .logo-o2 { animation-delay: 0.4s; }
+
+@keyframes letterReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-loader__tagline {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  min-height: 24px;
+}
+
+.profile-loader__bar {
+  width: 200px;
+  height: 2px;
+  background: var(--border-light);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.profile-loader__bar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
 
 /* ─── Top Bar ─── */
 .topbar {

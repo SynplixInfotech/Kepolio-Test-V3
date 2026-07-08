@@ -67,7 +67,9 @@
   align-items: center;
   gap: 8px;
 }
-.sidebar__logo .logo-a { color: var(--accent-blue); }
+.sidebar__logo .logo-k,
+.sidebar__logo .logo-rest { color: var(--text-primary); }
+.sidebar__logo .logo-p { color: var(--accent-blue); }
 
 .sidebar__nav {
   flex: 1;
