@@ -8,15 +8,9 @@
 
     // ─── DOM References ───
     const DOM = {
-        particles: document.getElementById('particles'),
-        gradientMesh: document.getElementById('gradientMesh'),
-        loaderOverlay: document.getElementById('loaderOverlay'),
-        loaderLogo: document.getElementById('loaderLogo'),
-        loaderTagline: document.getElementById('loaderTagline'),
         navbar: document.getElementById('navbar'),
         heroContent: document.getElementById('heroContent'),
         heroMockup: document.getElementById('heroMockup'),
-        deployBarFill: document.getElementById('deployBarFill'),
         mobileMenuBtn: document.getElementById('mobileMenuBtn'),
         navLinks: document.getElementById('navLinks'),
         scrollIndicator: document.getElementById('scrollIndicator'),
@@ -24,134 +18,6 @@
         themeToggleIcon: document.getElementById('themeToggleIcon'),
         themeToggleText: document.getElementById('themeToggleText'),
     };
-
-    // ─── Particle System ───
-    class ParticleField {
-        constructor(canvas) {
-            this.canvas = canvas;
-            this.ctx = canvas.getContext('2d');
-            this.particles = [];
-            this.resize();
-            window.addEventListener('resize', () => this.resize());
-        }
-
-        resize() {
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
-        }
-
-        init(count = 50) {
-            this.particles = [];
-            for (let i = 0; i < count; i++) {
-                this.particles.push({
-                    x: Math.random() * this.canvas.width,
-                    y: Math.random() * this.canvas.height,
-                    radius: Math.random() * 2 + 0.5,
-                    dx: (Math.random() - 0.5) * 0.4,
-                    dy: (Math.random() - 0.5) * 0.3,
-                    opacity: Math.random() * 0.4 + 0.1,
-                    opTarget: Math.random() * 0.5 + 0.2,
-                    opSpeed: Math.random() * 0.003 + 0.001,
-                    opDir: 1,
-                });
-            }
-            this._running = true;
-            // Pause loop when tab is hidden to save CPU
-            document.addEventListener('visibilitychange', () => {
-                if (!document.hidden && !this._running) {
-                    this._running = true;
-                    this.animate();
-                }
-            });
-            this.animate();
-        }
-
-        animate() {
-            if (document.hidden) {
-                this._running = false;
-                return;
-            }
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            const particleRGB = getComputedStyle(document.documentElement).getPropertyValue('--particle-rgb').trim() || '94, 106, 210';
-
-            for (const p of this.particles) {
-                // Move
-                p.x += p.dx;
-                p.y += p.dy;
-
-                // Wrap
-                if (p.x < 0) p.x = this.canvas.width;
-                if (p.x > this.canvas.width) p.x = 0;
-                if (p.y < 0) p.y = this.canvas.height;
-                if (p.y > this.canvas.height) p.y = 0;
-
-                // Pulse opacity
-                p.opacity += p.opSpeed * p.opDir;
-                if (p.opacity >= p.opTarget + 0.25) p.opDir = -1;
-                if (p.opacity <= p.opTarget - 0.15) p.opDir = 1;
-
-                // Draw
-                this.ctx.beginPath();
-                this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                this.ctx.fillStyle = `rgba(${particleRGB}, ${p.opacity})`;
-                this.ctx.fill();
-            }
-
-            requestAnimationFrame(() => this.animate());
-        }
-    }
-
-
-    // ─── Typewriter Effect ───
-    function typeWriter(element, text, speed = 55) {
-        return new Promise((resolve) => {
-            let i = 0;
-            element.textContent = '';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else {
-                    resolve();
-                }
-            }
-            type();
-        });
-    }
-
-    // ─── Gradient Mesh Hue Shift ───
-    // Throttled to every 4th frame (~15fps) — the gradient is subtle and doesn't
-    // need 60fps updates. This cuts gradient-related style recalculations by 75%.
-    function startGradientShift() {
-        let hueOffset = 0;
-        let frameCount = 0;
-        function shift() {
-            requestAnimationFrame(shift);
-            if (document.hidden) return;
-            if (++frameCount % 4 !== 0) return;
-
-            hueOffset += 0.6; // compensate for skipped frames (0.15 * 4)
-            const h1 = 217 + Math.sin(hueOffset * 0.01) * 10;
-            const h2 = 266 + Math.cos(hueOffset * 0.015) * 12;
-            const computed = getComputedStyle(document.documentElement);
-            const alpha1 = parseFloat(computed.getPropertyValue('--mesh-alpha-1')) || 0.08;
-            const alpha2 = parseFloat(computed.getPropertyValue('--mesh-alpha-2')) || 0.06;
-            const alpha3 = parseFloat(computed.getPropertyValue('--mesh-alpha-3')) || 0.04;
-            const light1 = parseFloat(computed.getPropertyValue('--mesh-light-1')) || 58;
-            const light2 = parseFloat(computed.getPropertyValue('--mesh-light-2')) || 62;
-
-            DOM.gradientMesh.style.background = `
-        radial-gradient(ellipse 80% 60% at ${20 + Math.sin(hueOffset * 0.005) * 5}% ${30 + Math.cos(hueOffset * 0.007) * 5}%, 
-          hsla(${h1}, 90%, ${light1}%, ${alpha1}) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 80% at ${80 + Math.cos(hueOffset * 0.006) * 5}% ${70 + Math.sin(hueOffset * 0.008) * 5}%, 
-          hsla(${h2}, 70%, ${light2}%, ${alpha2}) 0%, transparent 70%),
-        radial-gradient(ellipse 90% 50% at 50% 50%, 
-          hsla(${h1}, 90%, ${light1}%, ${alpha3}) 0%, transparent 80%)
-      `;
-        }
-        shift();
-    }
 
     // ─── Theme Controls ───
     const THEME_KEY = 'kepolio-theme';
@@ -319,57 +185,17 @@
 
     // ─── Entry Animation Sequence ───
     async function runEntrySequence() {
-        const isMobile = window.innerWidth < 768;
-        const particles = new ParticleField(DOM.particles);
-
-        // Step 1: 0.0s — Particles fade in (fewer on mobile to save GPU)
-        particles.init(isMobile ? 25 : 45);
-        DOM.particles.classList.add('visible');
-
-        // Step 2: 0.3s — Logo fade in with glow
-        await delay(300);
-        DOM.loaderLogo.classList.add('visible');
-
-        // Step 3: 0.6s — Typewriter tagline (faster typing)
-        await delay(300);
-        await typeWriter(DOM.loaderTagline, "Know Everyone's Portfolio", 40);
-
-        // Step 4: ~1.3s — Hide loader, show hero content
-        await delay(200);
-        DOM.loaderOverlay.classList.add('hidden');
-
-        await delay(100);
-        DOM.heroContent.classList.add('visible');
+        // Make everything visible immediately
         DOM.navbar.classList.add('visible');
-
-        // Step 5: ~1.6s — Hero mockup blur-to-clear
-        await delay(250);
+        DOM.heroContent.classList.add('visible');
         DOM.heroMockup.classList.add('visible');
-
-        // Restart link-added bar animation
-        DOM.deployBarFill.style.animation = 'none';
-        void DOM.deployBarFill.offsetWidth; // trigger reflow
-        DOM.deployBarFill.style.animation = 'deployBar 2.5s ease-out forwards';
-
-        // Step 6: ~1.85s — Gradient mesh begins
-        await delay(150);
-        DOM.gradientMesh.classList.add('visible');
-        startGradientShift();
-
-        // Step 7: ~2.0s — Full page interactive
-        await delay(150);
         document.body.style.overflowY = 'auto';
-    }
-
-    // ─── Utility ───
-    function delay(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     // ─── Init ───
     function init() {
-        // Prevent scroll during entry
-        document.body.style.overflowY = 'hidden';
+        // Show everything immediately
+        document.body.style.overflowY = 'auto';
         initTheme();
 
         // Start everything
