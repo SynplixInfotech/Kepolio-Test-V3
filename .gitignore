@@ -28,6 +28,8 @@ desktop.ini
 
 # ── Logs ──
 *.log
+skills/
+AGENTS.md
 npm-debug.log*
 
 # ── Firebase ──

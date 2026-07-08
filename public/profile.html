@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile — CASE</title>
-  <meta name="description" content="View this student's portfolio on CASE." />
+  <title>Profile — KePolio</title>
+  <meta name="description" content="View this student's portfolio on KePolio." />
   <meta name="theme-color" content="#f7f8f8" />
   <link rel="icon" type="image/svg+xml" href="logo/favicon.svg" />
 
@@ -31,7 +31,7 @@
 
   <!-- ═══════════════ TOP BAR ═══════════════ -->
   <div class="topbar">
-    <a href="/" class="topbar__logo">C<span class="logo-a">A</span>SE</a>
+    <a href="/" class="topbar__logo">Ke<span class="logo-a">P</span>olio</a>
     <div class="topbar__actions">
       <a href="/public/auth.html" class="topbar__cta" id="topbarCta">Create yours →</a>
       <a href="/public/dashboard.html" class="topbar__cta topbar__cta--owner" id="editProfileBtn" style="display:none">
@@ -40,11 +40,8 @@
     </div>
   </div>
 
-  <!-- ═══════════ WORLD'S GREATEST LOADER ═══════════ -->
+  <!-- ═══════════ PROFILE LOADER ═══════════ -->
   <div class="case-loader" id="caseLoader" aria-label="Loading profile" role="status">
-
-    <!-- Full-screen canvas: starfield + CASE logo + particle sphere -->
-    <canvas class="case-loader__canvas" id="loaderCanvas"></canvas>
 
     <!-- Typewriter status line -->
     <div class="case-loader__status">
@@ -52,7 +49,7 @@
       <div class="case-loader__cursor">|</div>
     </div>
 
-    <!-- Holographic progress bar -->
+    <!-- Progress bar -->
     <div class="case-loader__bar-wrap">
       <div class="case-loader__bar" id="loaderBar"></div>
       <div class="case-loader__bar-glow"></div>
@@ -61,10 +58,10 @@
     <!-- Corner HUD decorations -->
     <div class="case-loader__hud case-loader__hud--tl">
       <div class="hud-bracket hud-bracket--tl"></div>
-      <span class="hud-text">SYS::INIT</span>
+      <span class="hud-text">KePolio</span>
     </div>
     <div class="case-loader__hud case-loader__hud--tr">
-      <span class="hud-text">v4.0.0</span>
+      <span class="hud-text">v2.0</span>
       <div class="hud-bracket hud-bracket--tr"></div>
     </div>
     <div class="case-loader__hud case-loader__hud--bl">
@@ -87,7 +84,7 @@
     <div class="not-found">
       <div class="not-found__code">404</div>
       <div class="not-found__text">Profile not found</div>
-      <p class="not-found__sub">The CASE code or username may be incorrect</p>
+      <p class="not-found__sub">The KEP code or username may be incorrect</p>
       <a href="/public/explore.html" class="profile-btn profile-btn--primary" style="margin-top:16px">Try Another
         Code</a>
     </div>
@@ -198,9 +195,9 @@
       <!-- ── Footer ── -->
       <footer class="profile-footer">
         <p class="profile-footer__text">
-          Built with <span class="profile-footer__brand">C A S E</span>
+          Built with <span class="profile-footer__brand">K e P o l i o</span>
         </p>
-        <p class="profile-footer__tagline">Code. Access. Share. Everywhere.</p>
+        <p class="profile-footer__tagline">Know Everyone's Portfolio</p>
       </footer>
 
     </div>

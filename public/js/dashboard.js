@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Dashboard Logic
+   KePolio — Dashboard Logic
    ═══════════════════════════════════════════════════ */
 
 (function () {
@@ -145,7 +145,7 @@
         Utils.animateCount($('#statCerts'), certs.length);
 
         // CASE Code Panel
-        const profileUrl = `case.app/@${user.username}`;
+        const profileUrl = `kepolio.app/@${user.username}`;
         $('#overviewCode').textContent = user.caseCode || '---';
         $('#overviewLink').textContent = profileUrl;
         $('#overviewLink').href = `/public/profile.html?u=${user.username}`;
@@ -173,20 +173,20 @@
 
         $('#shareLink')?.addEventListener('click', async () => {
             const user = await DataService.getUser();
-            await Utils.copyToClipboard(`case.app/@${user.username}`);
+            await Utils.copyToClipboard(`kepolio.app/@${user.username}`);
             Utils.toast('Link copied!', 'success');
             dropdown.classList.remove('open');
         });
 
         $('#shareWhatsApp')?.addEventListener('click', async () => {
             const user = await DataService.getUser();
-            Utils.shareWhatsApp(`case.app/@${user.username}`);
+            Utils.shareWhatsApp(`kepolio.app/@${user.username}`);
             dropdown.classList.remove('open');
         });
 
         $('#shareEmail')?.addEventListener('click', async () => {
             const user = await DataService.getUser();
-            await Utils.copyToClipboard(`Check out my portfolio: case.app/@${user.username}\n\nBuilt with CASE — case.app`);
+            await Utils.copyToClipboard(`Check out my portfolio: kepolio.app/@${user.username}\n\nBuilt with KePolio — kepolio.app`);
             Utils.toast('Email text copied!', 'success');
             dropdown.classList.remove('open');
         });
@@ -905,7 +905,7 @@
     }
 
     // ═══════════════════════════════════════
-    //  MY CASE CODE
+    //  MY KEP CODE
     // ═══════════════════════════════════════
 
     let caseCodeListenersAttached = false;
@@ -916,7 +916,7 @@
             DataService.getProjects(),
             DataService.getCertificates(),
         ]);
-        const profileUrl = `case.app/@${user.username}`;
+        const profileUrl = `kepolio.app/@${user.username}`;
         const fullUrl = window.location.origin + `/public/profile.html?u=${user.username}`;
 
         $('#caseCodeDisplay').textContent = user.caseCode || '---';
@@ -942,7 +942,7 @@
                 const qrCanvas = $('#caseCodeQR canvas');
                 if (qrCanvas) {
                     const link = document.createElement('a');
-                    link.download = `CASE-QR-${user.username}.png`;
+                    link.download = `KEP-QR-${user.username}.png`;
                     link.href = qrCanvas.toDataURL();
                     link.click();
                 }

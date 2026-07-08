@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Public Profile Logic (Redesigned)
+   KePolio — Public Profile Logic (Redesigned)
    Supports owner/public views, certificate preview,
    social media cards, project View buttons
    ═══════════════════════════════════════════════════ */
@@ -41,7 +41,7 @@
             }
 
             // Update page title & meta
-            document.title = `${data.user.fullName} — CASE`;
+            document.title = `${data.user.fullName} — KePolio`;
 
             // Clone template into container
             const template = document.getElementById('profileTemplate');

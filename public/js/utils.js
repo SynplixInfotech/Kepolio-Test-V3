@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Shared Utilities
+   KePolio — Shared Utilities
    Toast, copy, QR, animations
    ═══════════════════════════════════════════════════ */
 
@@ -181,8 +181,8 @@ const Utils = (() => {
 
     // ── Email Share ──
     function shareEmail(url, name) {
-        const subject = encodeURIComponent(`${name}'s Portfolio — CASE`);
-        const body = encodeURIComponent(`Hi,\n\nCheck out my portfolio:\n${url}\n\nBuilt with CASE — case.app`);
+        const subject = encodeURIComponent(`${name}'s Portfolio — KePolio`);
+        const body = encodeURIComponent(`Hi,\n\nCheck out my portfolio:\n${url}\n\nBuilt with KePolio — kepolio.app`);
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
     }
 

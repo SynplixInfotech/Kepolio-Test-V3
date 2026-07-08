@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Data Service (Firebase Firestore)
+   KePolio — Data Service (Firebase Firestore)
    All CRUD operations against Firestore.
    Requires firebase-config.js to be loaded first.
    ═══════════════════════════════════════════════════ */
@@ -29,7 +29,7 @@ const DataService = (() => {
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
         let code = '';
         for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)];
-        return 'CASE-' + code;
+        return 'KEP-' + code;
     }
 
     // ── Session Cache ──

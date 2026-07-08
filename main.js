@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Main JavaScript
+   KePolio — Main JavaScript
    Entry animations, particles, scroll reveal, interactions
    ═══════════════════════════════════════════════════ */
 
@@ -154,7 +154,7 @@
     }
 
     // ─── Theme Controls ───
-    const THEME_KEY = 'case-theme';
+    const THEME_KEY = 'kepolio-theme';
 
     function updateThemeControlState(theme) {
         if (DOM.themeToggleIcon) DOM.themeToggleIcon.textContent = theme === 'dark' ? '☀' : '🌙';
@@ -332,7 +332,7 @@
 
         // Step 3: 0.6s — Typewriter tagline (faster typing)
         await delay(300);
-        await typeWriter(DOM.loaderTagline, 'Code. Access. Share. Everywhere.', 40);
+        await typeWriter(DOM.loaderTagline, "Know Everyone's Portfolio", 40);
 
         // Step 4: ~1.3s — Hide loader, show hero content
         await delay(200);

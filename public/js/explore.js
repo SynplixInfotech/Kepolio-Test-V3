@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Explore / Code Entry Logic
+   KePolio — Explore / Code Entry Logic
    ═══════════════════════════════════════════════════ */
 
 (function () {
@@ -33,13 +33,13 @@
         let code = input.value.trim().toUpperCase();
 
         if (!code) {
-            showError('Please enter a CASE code.');
+            showError('Please enter a KEP code.');
             return;
         }
 
-        // Normalize: allow entering just the suffix
-        if (!code.startsWith('CASE-') && code.length <= 5) {
-            code = 'CASE-' + code;
+        // Normalize: allow entering just the suffix (supports both KEP- and legacy CASE- codes)
+        if (!code.startsWith('KEP-') && !code.startsWith('CASE-') && code.length <= 5) {
+            code = 'KEP-' + code;
         }
 
         // Show spinner
