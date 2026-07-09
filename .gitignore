@@ -45,3 +45,7 @@ project-brain/
 .gitignore
 .vercel
 log/
+browser-tests/
+playwright.config.js
+scripts/test-server.js
+test-results/
