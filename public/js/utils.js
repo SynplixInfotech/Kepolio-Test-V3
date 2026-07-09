@@ -70,11 +70,12 @@ const Utils = (() => {
         // Use QR Code library from CDN (loaded in HTML)
         if (typeof QRCode !== 'undefined') {
             container.innerHTML = '';
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             new QRCode(container, {
                 text: url,
                 width: size,
                 height: size,
-                colorDark: '#F1F5F9',
+                colorDark: isDark ? '#F1F5F9' : '#101317',
                 colorLight: 'transparent',
                 correctLevel: QRCode.CorrectLevel.M,
             });
@@ -87,6 +88,25 @@ const Utils = (() => {
             `;
         }
     }
+
+    // ── Re-render QR codes on theme change ──
+    const qrRegistry = new Map();
+    const originalGenerateQR = generateQR;
+    function generateQRTracked(container, url, size) {
+        qrRegistry.set(container, { url, size });
+        originalGenerateQR(container, url, size);
+    }
+    generateQR = generateQRTracked;
+
+    new MutationObserver(() => {
+        qrRegistry.forEach((params, container) => {
+            if (document.body.contains(container)) {
+                originalGenerateQR(container, params.url, params.size);
+            } else {
+                qrRegistry.delete(container);
+            }
+        });
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     // ── Count-up Animation ──
     function animateCount(element, target, duration = 800) {

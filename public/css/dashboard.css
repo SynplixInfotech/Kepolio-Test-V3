@@ -65,7 +65,6 @@
   color: var(--text-primary);
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 .sidebar__logo .logo-k,
 .sidebar__logo .logo-rest { color: var(--text-primary); }
@@ -1133,4 +1132,11 @@
   .sidebar { width: min(240px, 90vw); }
   .code-panel__code-wrap { gap: 10px; }
   .code-panel__qr { flex-direction: column; gap: 12px; }
+  .social-field { flex-direction: column; }
+  .social-field__icon { border-radius: var(--radius-btn) var(--radius-btn) 0 0; border-right: 1px solid var(--border-subtle); border-bottom: none; width: 100%; height: 36px; }
+  .social-field .input { border-radius: 0 0 var(--radius-btn) var(--radius-btn); }
+  .cert-row { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
+  .cert-row__name { flex-basis: 100%; order: -1; }
+  .qual-row { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
+  .exp-row { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
 }
