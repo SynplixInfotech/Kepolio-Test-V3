@@ -86,7 +86,17 @@ Open `http://localhost:3000` in your browser.
 │   │   ├── auth.js             # Authentication service
 │   │   ├── auth-page.js        # Auth page UI logic
 │   │   ├── data-service.js     # Firestore CRUD operations
-│   │   ├── dashboard.js        # Dashboard page logic
+│   │   ├── dashboard-helpers.js    # Dashboard shared helpers & namespace
+│   │   ├── dashboard-nav.js        # Dashboard navigation & section switching
+│   │   ├── dashboard-overview.js   # Dashboard overview section
+│   │   ├── dashboard-profile.js    # Dashboard edit profile section
+│   │   ├── dashboard-projects.js   # Dashboard projects section & modal
+│   │   ├── dashboard-certs.js      # Dashboard certificates section
+│   │   ├── dashboard-quals.js      # Dashboard qualifications section
+│   │   ├── dashboard-exps.js       # Dashboard experiences section
+│   │   ├── dashboard-code.js       # Dashboard KEP code section
+│   │   ├── dashboard-delete-modal.js # Dashboard delete confirmation modal
+│   │   ├── dashboard-init.js       # Dashboard initialization entry point
 │   │   ├── explore.js          # Explore page logic
 │   │   ├── profile.js          # Profile page logic
 │   │   ├── cloudinary.js       # Image upload via Cloudinary

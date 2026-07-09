@@ -37,7 +37,7 @@ Use pure client-side rendering for all app pages. HTML provides the structure; J
 
 ## Consequences
 - HTML pages ship with skeleton structure and loading indicators
-- JS modules (`auth.js`, `data-service.js`, `dashboard.js`) fetch data and populate DOM on load
+- JS modules (`auth.js`, `data-service.js`, `dashboard-*.js`) fetch data and populate DOM on load
 - Firestore's `onSnapshot` listeners provide real-time updates without page refreshes
 - Trade-off: Slower initial paint on app pages (mitigated by skeleton loaders)
 - Trade-off: No SEO for app pages (acceptable — dashboard is private; auth pages don't need indexing)
