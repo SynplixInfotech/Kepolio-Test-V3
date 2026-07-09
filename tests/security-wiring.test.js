@@ -33,7 +33,7 @@ test('browser entry pages load validation.js before dependent app scripts', () =
     }
 });
 
-test('package.json exposes a local test command', () => {
+test('package.json exposes a finite local test command', () => {
     const pkg = JSON.parse(read('package.json'));
-    assert.equal(pkg.scripts.test, 'node --test');
+    assert.equal(pkg.scripts.test, 'node --test tests/*.test.js');
 });

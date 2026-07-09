@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /login
+Disallow: /signup
+Disallow: /dashboard
+Disallow: /public/auth.html
+Disallow: /public/dashboard.html
+
+Sitemap: https://kepolio.vercel.app/sitemap.xml

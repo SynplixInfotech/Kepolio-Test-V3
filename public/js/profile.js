@@ -8,6 +8,8 @@
     'use strict';
 
     const container = document.getElementById('profileContainer');
+    const SITE_ORIGIN = 'https://kepolio.vercel.app';
+    const DEFAULT_SHARE_IMAGE = `${SITE_ORIGIN}/public/logo/android-chrome-512x512.png`;
 
     // ── Profile Loader ──
     const profileLoader = document.getElementById('profileLoader');
@@ -87,8 +89,7 @@
                 return;
             }
 
-            // Update page title & meta
-            document.title = `${data.user.fullName} — KePolio`;
+            updateProfileSeo(data);
 
             // Clone template into container
             const template = document.getElementById('profileTemplate');
@@ -306,6 +307,159 @@
             </div>
         `;
         }).join('');
+    }
+
+    function updateProfileSeo(data) {
+        const user = data.user || {};
+        const displayName = sanitizeSeoText(user.fullName || 'Student');
+        const usernameValue = sanitizeUsername(user.username || username);
+        const role = sanitizeSeoText(user.role || 'Student');
+        const canonicalUrl = `${SITE_ORIGIN}/@${usernameValue}`;
+        const title = `${displayName} | ${role} Portfolio | KePolio`;
+        const description = buildProfileDescription(user);
+        const shareImage = getProfileShareImage(user.photoURL);
+
+        document.title = title;
+        setMeta('name', 'description', description);
+        setMeta('name', 'author', displayName);
+        setMeta('property', 'og:title', title);
+        setMeta('property', 'og:description', description);
+        setMeta('property', 'og:url', canonicalUrl);
+        setMeta('property', 'og:image', shareImage);
+        setMeta('name', 'twitter:title', title);
+        setMeta('name', 'twitter:description', description);
+        setMeta('name', 'twitter:image', shareImage);
+        setCanonical(canonicalUrl);
+        setProfileSchema(data, canonicalUrl, title, description, shareImage);
+    }
+
+    function buildProfileDescription(user) {
+        const name = sanitizeSeoText(user.fullName || 'This student');
+        const role = sanitizeSeoText(user.role || 'student');
+        const bio = sanitizeSeoText(user.bio || '');
+
+        if (bio) {
+            return truncateSeoText(`${name} is a ${role}. ${bio}`, 160);
+        }
+
+        return `Explore ${name}'s professional portfolio including projects, education, certifications, achievements and experience.`;
+    }
+
+    function setMeta(attribute, key, value) {
+        let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
+        if (!element) {
+            element = document.createElement('meta');
+            element.setAttribute(attribute, key);
+            document.head.appendChild(element);
+        }
+        element.setAttribute('content', value);
+    }
+
+    function setCanonical(url) {
+        let canonical = document.head.querySelector('link[rel="canonical"]');
+        if (!canonical) {
+            canonical = document.createElement('link');
+            canonical.setAttribute('rel', 'canonical');
+            document.head.appendChild(canonical);
+        }
+        canonical.setAttribute('href', url);
+    }
+
+    function setProfileSchema(data, canonicalUrl, title, description, shareImage) {
+        const user = data.user || {};
+        const sameAs = buildSameAs(user.socialLinks || {});
+        const knowsAbout = buildKnowsAbout(data.projects || []);
+        const alumniOf = buildAlumniOf(data.qualifications || []);
+        const schema = {
+            '@context': 'https://schema.org',
+            '@graph': [
+                {
+                    '@type': 'WebPage',
+                    '@id': `${canonicalUrl}#webpage`,
+                    url: canonicalUrl,
+                    name: title,
+                    description,
+                    image: shareImage,
+                    isPartOf: {
+                        '@type': 'WebSite',
+                        name: 'KePolio',
+                        url: SITE_ORIGIN + '/',
+                    },
+                    breadcrumb: {
+                        '@type': 'BreadcrumbList',
+                        itemListElement: [
+                            { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_ORIGIN + '/' },
+                            { '@type': 'ListItem', position: 2, name: user.fullName || 'Profile', item: canonicalUrl },
+                        ],
+                    },
+                },
+                {
+                    '@type': 'Person',
+                    '@id': `${canonicalUrl}#person`,
+                    name: user.fullName || 'Student',
+                    url: canonicalUrl,
+                    image: shareImage,
+                    jobTitle: user.role || 'Student',
+                    description,
+                    sameAs,
+                    alumniOf,
+                    knowsAbout,
+                },
+            ],
+        };
+
+        let script = document.getElementById('profileDynamicSchema');
+        if (!script) {
+            script = document.createElement('script');
+            script.id = 'profileDynamicSchema';
+            script.type = 'application/ld+json';
+            document.head.appendChild(script);
+        }
+        script.textContent = JSON.stringify(schema);
+    }
+
+    function buildSameAs(links) {
+        return Object.values(links)
+            .map((link) => ValidationUtils.safeExternalHref(link))
+            .filter(Boolean);
+    }
+
+    function buildKnowsAbout(projects) {
+        const topics = new Set();
+        projects.forEach((project) => {
+            (project.techStack || []).forEach((tech) => {
+                const value = sanitizeSeoText(tech);
+                if (value) topics.add(value);
+            });
+        });
+        return Array.from(topics).slice(0, 20);
+    }
+
+    function buildAlumniOf(qualifications) {
+        return qualifications
+            .map((qualification) => sanitizeSeoText(qualification.institution))
+            .filter(Boolean)
+            .slice(0, 5)
+            .map((name) => ({ '@type': 'EducationalOrganization', name }));
+    }
+
+    function getProfileShareImage(photoUrl) {
+        if (!photoUrl) return DEFAULT_SHARE_IMAGE;
+        const safeUrl = ValidationUtils.safeExternalHref(photoUrl);
+        return safeUrl || DEFAULT_SHARE_IMAGE;
+    }
+
+    function sanitizeUsername(value) {
+        return String(value || 'username').toLowerCase().replace(/[^a-z0-9._-]/g, '') || 'username';
+    }
+
+    function sanitizeSeoText(value) {
+        return String(value || '').replace(/\s+/g, ' ').trim();
+    }
+
+    function truncateSeoText(value, maxLength) {
+        if (value.length <= maxLength) return value;
+        return value.slice(0, maxLength - 1).trimEnd() + '…';
     }
 
     /* ═══════════════ CERTIFICATES ═══════════════ */
