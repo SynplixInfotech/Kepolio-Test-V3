@@ -49,3 +49,4 @@ browser-tests/
 playwright.config.js
 scripts/test-server.js
 test-results/
+.antigravity/

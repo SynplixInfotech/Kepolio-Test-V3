@@ -25,6 +25,10 @@
   <!-- QR Code Library -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
 
+  <!-- PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+
   <link rel="stylesheet" href="css/shared.css" />
   <link rel="stylesheet" href="css/dashboard.css" />
   <script src="js/theme.js" defer></script>
@@ -514,10 +518,35 @@
       <!-- ── KEPOLIO ID ── -->
       <div class="main__section" id="sec-kepolio-id">
         <h2 class="section-title">KePolio ID</h2>
-        <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
-          <div style="font-size: 48px; margin-bottom: 16px;">🚧</div>
-          <h3 style="margin-bottom: 8px; color: var(--text-primary);">Coming Soon</h3>
-          <p>We're working on your digital identity card. This feature will be available soon.</p>
+
+        <div class="kep-id-section">
+          <!-- Card renders here — populated by dashboard-id.js from user object -->
+          <div id="kep-id-card-container" aria-live="polite" aria-label="KePolio ID card"></div>
+
+          <!-- Card action bar: flip, copy code, download PDF -->
+          <div class="kep-id-section__actions" id="kepIdActions" style="display:none;">
+            <button class="btn btn--secondary btn--small" id="kepIdFlipBtn" aria-label="Flip card to view back">
+              ↺ View Back
+            </button>
+            <button class="btn btn--secondary btn--small" id="kepIdCopyCode" aria-label="Copy KEP Code to clipboard">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14" aria-hidden="true">
+                <rect x="4" y="4" width="9" height="9" rx="1.5"/>
+                <path d="M3 3H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1"/>
+              </svg>
+              Copy KEP Code
+            </button>
+            <button class="btn btn--primary btn--small" id="kepIdDownloadBtn" aria-label="Download ID card as PDF">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14" aria-hidden="true">
+                <path d="M8 1v9M4 7l4 4 4-4"/>
+                <path d="M2 13h12"/>
+              </svg>
+              Download PDF
+            </button>
+          </div>
+
+          <p class="kep-id-section__hint" id="kepIdHint" style="display:none;">
+            Your digital identity card — share it anywhere.
+          </p>
         </div>
       </div>
 
@@ -631,6 +660,7 @@
   <script src="js/dashboard-exps.js" defer></script>
   <script src="js/dashboard-code.js" defer></script>
   <script src="js/dashboard-delete-modal.js" defer></script>
+  <script src="js/dashboard-id.js" defer></script>
   <script src="js/dashboard-init.js" defer></script>
 </body>
 

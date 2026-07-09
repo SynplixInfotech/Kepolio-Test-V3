@@ -1,8 +1,8 @@
-/* ═══════════════════════════════════════════════════
-   CASE — Dashboard Styles
-   ═══════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   CASE â€” Dashboard Styles
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-/* ─── Skeleton Loaders ─── */
+/* â”€â”€â”€ Skeleton Loaders â”€â”€â”€ */
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
@@ -35,13 +35,13 @@
   vertical-align: middle;
 }
 
-/* ─── Layout ─── */
+/* â”€â”€â”€ Layout â”€â”€â”€ */
 .dash {
   display: flex;
   min-height: 100vh;
 }
 
-/* ─── Sidebar ─── */
+/* â”€â”€â”€ Sidebar â”€â”€â”€ */
 .sidebar {
   position: fixed;
   top: 0;
@@ -130,7 +130,7 @@
   background: rgba(239, 68, 68, 0.06);
 }
 
-/* ─── Mobile Sidebar Toggle ─── */
+/* â”€â”€â”€ Mobile Sidebar Toggle â”€â”€â”€ */
 .sidebar-toggle {
   display: none;
   position: fixed;
@@ -150,7 +150,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* ─── Sidebar Backdrop (mobile) ─── */
+/* â”€â”€â”€ Sidebar Backdrop (mobile) â”€â”€â”€ */
 .sidebar-backdrop {
   display: none;
   position: fixed;
@@ -166,7 +166,7 @@
   opacity: 1;
 }
 
-/* ─── Main Content ─── */
+/* â”€â”€â”€ Main Content â”€â”€â”€ */
 .main {
   margin-left: 240px;
   flex: 1;
@@ -185,7 +185,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ═══════════════ OVERVIEW ═══════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• OVERVIEW â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 /* Welcome Banner */
 .welcome {
@@ -408,7 +408,7 @@
   flex-wrap: wrap;
 }
 
-/* ═══════════════ EDIT PROFILE ═══════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• EDIT PROFILE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .profile-form {
   max-width: 640px;
@@ -520,7 +520,7 @@
   justify-content: flex-end;
 }
 
-/* ═══════════════ PROJECTS MANAGER ═══════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PROJECTS MANAGER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .projects-header {
   display: flex;
@@ -690,7 +690,7 @@
 }
 .tag-input__field::placeholder { color: var(--text-dim); }
 
-/* ═══════════════ CERTIFICATES MANAGER ═══════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CERTIFICATES MANAGER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .certs-add {
   display: flex;
@@ -772,7 +772,7 @@
   overflow: hidden;
 }
 
-/* ═══════════════ QUALIFICATIONS MANAGER ═══════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• QUALIFICATIONS MANAGER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .quals-add {
   margin-bottom: var(--space-3);
@@ -846,7 +846,7 @@
   overflow: hidden;
 }
 
-/* ═══════════════ EXPERIENCES MANAGER ═══════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• EXPERIENCES MANAGER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .exps-add {
   margin-bottom: var(--space-3);
@@ -926,7 +926,7 @@
   overflow: hidden;
 }
 
-/* ═══════════════ MY CASE CODE (dedicated) ═══════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MY CASE CODE (dedicated) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .share-center {
   max-width: 600px;
@@ -1073,7 +1073,7 @@
   font-weight: 600;
 }
 
-/* ─── Responsive ─── */
+/* â”€â”€â”€ Responsive â”€â”€â”€ */
 @media (max-width: 900px) {
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .projects-grid { grid-template-columns: 1fr; }
@@ -1141,3 +1141,449 @@
   .qual-row { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
   .exp-row { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
 }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   KEP ID CARD  â€”  Two-sided (Front + Back)
+   Card: 638 Ã— 1013 px  |  Photo: 300 Ã— 400 px
+   QR (back): 450 Ã— 450 px
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* â”€â”€â”€ Section wrapper â”€â”€â”€ */
+.kep-id-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding-bottom: 48px;
+}
+
+.kep-id-section__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.kep-id-section__hint {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* â”€â”€â”€ Viewer + scaling stage â”€â”€â”€ */
+/*   Card is 638 Ã— 1013 but we scale it to fit the content area.
+     CSS custom property --kep-scale is set by a resize observer in JS,
+     default 0.55 for typical desktops.                                */
+.kep-id2-viewer {
+  /* Reserve the scaled height so layout doesn't collapse */
+  width: 350px;
+  height: 556px;
+  position: relative;
+  /* Centre the card */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.kep-id2-stage {
+  transform-origin: top left;
+  transform: scale(0.55);
+  /* Actual card DOM is full-size; scale shrinks it visually */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 638px;
+}
+
+/* â”€â”€â”€ The card itself â”€â”€â”€ */
+.kep-id2 {
+  position: relative;
+  width: 638px;
+  height: 1013px;
+  background: #ffffff;
+  border: 1px solid rgba(113, 112, 255, 0.22);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  box-shadow:
+    0 4px 16px rgba(113, 112, 255, 0.10),
+    0 16px 56px rgba(113, 112, 255, 0.12),
+    0 0 0 1px rgba(113, 112, 255, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+/* â”€â”€â”€ Background decoration layer â”€â”€â”€ */
+.kep-id2__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.kep-id2__waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* All child sections above bg */
+.kep-id2__header,
+.kep-id2__photo-section,
+.kep-id2__identity,
+.kep-id2__code-section,
+.kep-id2__qr-section,
+.kep-id2__footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* â”€â”€â”€ Header â”€â”€â”€ */
+.kep-id2__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 40px 0;
+  flex-shrink: 0;
+}
+
+.kep-id2__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kep-id2__logo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1;
+}
+.kep-id2__logo-ke,
+.kep-id2__logo-rest { color: #101317; }
+.kep-id2__logo-p    { color: #5e6ad2; }
+
+.kep-id2__tagline {
+  font-size: 10px;
+  font-weight: 500;
+  color: #8a8f98;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kep-id2__id-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.kep-id2__id-prefix {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a8f98;
+}
+
+.kep-id2__id-code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #7170ff;
+  background: rgba(113, 112, 255, 0.08);
+  border: 1px solid rgba(113, 112, 255, 0.18);
+  border-radius: 8px;
+  padding: 4px 12px;
+}
+
+/* â”€â”€â”€ Photo section (front face) â”€â”€â”€ */
+.kep-id2__photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 36px 40px 0;
+  flex-shrink: 0;
+}
+
+.kep-id2__photo-wrap {
+  /* width/height set inline by JS: 300 Ã— 400 px */
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(113, 112, 255, 0.06);
+  border: 2.5px solid rgba(113, 112, 255, 0.22);
+  box-shadow:
+    0 8px 32px rgba(113, 112, 255, 0.14),
+    0 2px 8px rgba(113, 112, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kep-id2__photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.kep-id2__photo-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kep-id2__photo-fallback svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Verified badge */
+.kep-id2__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px 7px 10px;
+  background: rgba(113, 112, 255, 0.08);
+  border: 1px solid rgba(113, 112, 255, 0.22);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #7170ff;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* â”€â”€â”€ Identity â”€â”€â”€ */
+.kep-id2__identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 40px 0;
+  text-align: center;
+}
+
+.kep-id2__name {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: #101317;
+  margin: 0;
+}
+
+.kep-id2__username {
+  font-size: 16px;
+  font-weight: 500;
+  color: #7170ff;
+}
+
+.kep-id2__headline {
+  font-size: 14px;
+  font-weight: 400;
+  color: #62666d;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+/* â”€â”€â”€ KEP Code section â”€â”€â”€ */
+.kep-id2__code-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 40px 0;
+  margin-top: auto; /* push to bottom before footer */
+}
+
+.kep-id2__code-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a8f98;
+}
+
+.kep-id2__code-value {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  color: #101317;
+  background: linear-gradient(135deg, rgba(113,112,255,0.07) 0%, rgba(94,106,210,0.04) 100%);
+  border: 2px solid rgba(113, 112, 255, 0.18);
+  border-radius: 14px;
+  padding: 14px 32px;
+  box-shadow: 0 0 28px rgba(113, 112, 255, 0.08);
+}
+
+/* â”€â”€â”€ Footer â”€â”€â”€ */
+.kep-id2__footer {
+  padding: 20px 40px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+.kep-id2__footer-line {
+  width: calc(100% - 80px);
+  height: 1px;
+  background: rgba(113, 112, 255, 0.12);
+}
+
+.kep-id2__footer-url {
+  font-size: 12px;
+  font-weight: 500;
+  color: #8a8f98;
+  letter-spacing: 0.03em;
+}
+
+/* â”€â”€â”€ QR Section (back face) â”€â”€â”€ */
+.kep-id2--back {
+  justify-content: space-between;
+}
+
+.kep-id2__qr-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 40px;
+}
+
+.kep-id2__qr-label {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #62666d;
+}
+
+.kep-id2__qr-wrap {
+  /* width/height set inline by JS: 450 Ã— 450 px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 2px solid rgba(113, 112, 255, 0.15);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow:
+    0 4px 20px rgba(113, 112, 255, 0.08),
+    0 0 0 1px rgba(113, 112, 255, 0.06);
+  box-sizing: content-box;
+}
+
+.kep-id2__qr-wrap img,
+.kep-id2__qr-wrap canvas {
+  display: block;
+  border-radius: 4px;
+}
+
+/* â”€â”€â”€ Skeleton â”€â”€â”€ */
+@keyframes kep2-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.kep-id2--skeleton {
+  pointer-events: none;
+  user-select: none;
+  box-shadow: none;
+  border-color: rgba(113, 112, 255, 0.1);
+}
+
+.kep-sk {
+  background: linear-gradient(
+    90deg,
+    rgba(113,112,255,0.06) 0%,
+    rgba(113,112,255,0.13) 50%,
+    rgba(113,112,255,0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation: kep2-shimmer 1.6s infinite;
+  border-radius: 8px;
+}
+
+.kep-sk--logo    { width: 160px; height: 26px; }
+.kep-sk--code    { width: 90px;  height: 32px; border-radius: 8px; }
+.kep-sk--photo   { border-radius: 18px !important; border: 2px solid rgba(113,112,255,0.1); }
+.kep-sk--name    { width: 200px; height: 32px; }
+.kep-sk--user    { width: 120px; height: 18px; }
+.kep-sk--headline { width: 260px; height: 16px; }
+.kep-sk--code-label { width: 100px; height: 12px; }
+.kep-sk--code-val   { width: 240px; height: 56px; border-radius: 14px; }
+
+/* â”€â”€â”€ Dark mode â”€â”€â”€ */
+:root[data-theme='dark'] .kep-id2 {
+  background: #0f1014;
+  border-color: rgba(113, 112, 255, 0.18);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 16px 56px rgba(113, 112, 255, 0.10),
+    0 0 0 1px rgba(113, 112, 255, 0.12);
+}
+
+:root[data-theme='dark'] .kep-id2__logo-ke,
+:root[data-theme='dark'] .kep-id2__logo-rest { color: #f7f8f8; }
+
+:root[data-theme='dark'] .kep-id2__name       { color: #f7f8f8; }
+
+:root[data-theme='dark'] .kep-id2__code-value {
+  color: #f7f8f8;
+  background: linear-gradient(135deg, rgba(113,112,255,0.12) 0%, rgba(94,106,210,0.07) 100%);
+  border-color: rgba(113, 112, 255, 0.28);
+  box-shadow: 0 0 32px rgba(113, 112, 255, 0.14);
+}
+
+:root[data-theme='dark'] .kep-id2__photo-wrap {
+  background: rgba(113, 112, 255, 0.07);
+  border-color: rgba(113, 112, 255, 0.28);
+}
+
+:root[data-theme='dark'] .kep-id2__id-code {
+  background: rgba(113, 112, 255, 0.14);
+  border-color: rgba(113, 112, 255, 0.28);
+}
+
+:root[data-theme='dark'] .kep-id2__verified {
+  background: rgba(113, 112, 255, 0.12);
+  border-color: rgba(113, 112, 255, 0.28);
+}
+
+:root[data-theme='dark'] .kep-id2__footer-line {
+  background: rgba(113, 112, 255, 0.14);
+}
+
+:root[data-theme='dark'] .kep-id2__qr-wrap {
+  background: #1a1b20;
+  border-color: rgba(113, 112, 255, 0.22);
+}
+
+:root[data-theme='dark'] .kep-sk {
+  background: linear-gradient(
+    90deg,
+    rgba(113,112,255,0.05) 0%,
+    rgba(113,112,255,0.10) 50%,
+    rgba(113,112,255,0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: kep2-shimmer 1.6s infinite;
+}
+
