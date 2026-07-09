@@ -293,6 +293,31 @@
   to { transform: rotate(360deg); }
 }
 
+/* ─── Checkbox ─── */
+.auth__checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.auth__checkbox {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--accent-blue);
+}
+.auth__checkbox-text a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+.auth__checkbox-text a:hover {
+  text-decoration: underline;
+}
+
 /* ─── Responsiveness ─── */
 @media (max-width: 640px) {
   .auth {

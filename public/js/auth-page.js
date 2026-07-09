@@ -39,6 +39,31 @@
     const resetSuccess   = document.getElementById('resetSuccess');
     const resetBtn       = document.getElementById('resetBtn');
 
+    // ── Terms Checkbox Handling ──
+    const loginTerms = document.getElementById('loginTerms');
+    const signupTerms = document.getElementById('signupTerms');
+    const googleTerms = document.getElementById('googleTerms');
+    const googleLoginBtn = document.getElementById('googleLoginBtn');
+    const googleSignupBtn = document.getElementById('googleSignupBtn');
+    const googleUsernameBtn = document.getElementById('googleUsernameBtn');
+
+    function updateLoginButtonState() {
+        loginBtn.disabled = !loginTerms.checked;
+    }
+
+    function updateSignupButtonState() {
+        signupBtn.disabled = !signupTerms.checked;
+        googleSignupBtn.disabled = !signupTerms.checked;
+    }
+
+    function updateGoogleUsernameButtonState() {
+        googleUsernameBtn.disabled = !googleTerms.checked;
+    }
+
+    loginTerms.addEventListener('change', updateLoginButtonState);
+    signupTerms.addEventListener('change', updateSignupButtonState);
+    googleTerms.addEventListener('change', updateGoogleUsernameButtonState);
+
     // ── Card Navigation ──
     function showCard(name) {
         Object.values(cards).forEach(c => c.classList.add('auth__card--hidden'));
@@ -176,6 +201,12 @@
             return;
         }
 
+        const termsCheckbox = document.getElementById('signupTerms');
+        if (!termsCheckbox.checked) {
+            signupError.textContent = 'You must agree to the Terms of Service and Privacy Policy.';
+            return;
+        }
+
         setLoading(signupBtn, true);
         try {
             await AuthService.signUp(email, password, fullName, username);
@@ -215,9 +246,6 @@
     AuthService.redirectIfAuth();
 
     // ── Google Sign-In ──
-    const googleLoginBtn  = document.getElementById('googleLoginBtn');
-    const googleSignupBtn = document.getElementById('googleSignupBtn');
-
     async function handleGoogleSignIn(errorEl) {
         try {
             const { user, isNew } = await AuthService.signInWithGoogle();
@@ -240,7 +268,6 @@
     const googleUsernameInput = document.getElementById('googleUsername');
     const googleUsernameHint  = document.getElementById('googleUsernameHint');
     const googleUsernameError = document.getElementById('googleUsernameError');
-    const googleUsernameBtn   = document.getElementById('googleUsernameBtn');
 
     let gUsernameTimer = null;
 
@@ -295,6 +322,12 @@
 
         if (!username || !usernameRegex.test(username)) {
             googleUsernameError.textContent = 'Please enter a valid username.';
+            return;
+        }
+
+        const termsCheckbox = document.getElementById('googleTerms');
+        if (!termsCheckbox.checked) {
+            googleUsernameError.textContent = 'You must agree to the Terms of Service and Privacy Policy.';
             return;
         }
 

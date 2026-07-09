@@ -29,6 +29,7 @@
             qualifications: Dashboard.loadQualifications,
             experiences: Dashboard.loadExperiences,
             'case-code': Dashboard.loadCaseCode,
+            'kepolio-id': function() {},
         };
         const fn = loaders[section];
         if (fn) fn();
