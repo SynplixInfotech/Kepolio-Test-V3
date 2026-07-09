@@ -246,6 +246,23 @@
         }
     }
 
+    async function _waitForStableCapture() {
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }
+
+    async function _captureFace(face, front, back, captureOpts) {
+        if (face === 'front') {
+            if (front) front.style.display = '';
+            if (back) back.style.display = 'none';
+        } else {
+            if (front) front.style.display = 'none';
+            if (back) back.style.display = '';
+        }
+
+        await _waitForStableCapture();
+        return html2canvas(face === 'front' ? front : back, captureOpts);
+    }
+
     /* ════════════════════════════════════════════════
        SKELETON
     ════════════════════════════════════════════════ */
@@ -364,15 +381,8 @@
                 scrollY: 0,
             };
 
-            /* Capture front */
-            if (front) front.style.display = '';
-            if (back)  back.style.display  = 'none';
-            const frontCanvas = await html2canvas(front, captureOpts);
-
-            /* Capture back */
-            if (front) front.style.display = 'none';
-            if (back)  back.style.display  = '';
-            const backCanvas  = await html2canvas(back,  captureOpts);
+            const frontCanvas = await _captureFace('front', front, back, captureOpts);
+            const backCanvas = await _captureFace('back', front, back, captureOpts);
 
             /* Restore */
             if (stage)  stage.style.transform  = savedTransform;
