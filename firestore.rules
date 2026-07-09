@@ -115,7 +115,9 @@ service cloud.firestore {
       // Only authenticated users can create/update
       // and only if the uid field matches the auth user
       allow create: if isAuth() && request.resource.data.uid == request.auth.uid;
-      allow update: if isAuth() && request.resource.data.uid == request.auth.uid;
+      allow update: if isAuth() &&
+        resource.data.uid == request.auth.uid &&
+        request.resource.data.uid == resource.data.uid;
 
       // Only the owner can delete (during username change)
       allow delete: if isAuth() && resource.data.uid == request.auth.uid;

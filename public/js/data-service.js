@@ -21,6 +21,14 @@ const DataService = (() => {
         return db.collection('users').doc(_uid());
     }
 
+    function _usernameRef(username) {
+        return db.collection('usernames').doc(username);
+    }
+
+    function _caseCodeRef(code) {
+        return db.collection('caseCodes').doc(code);
+    }
+
     function _generateId() {
         return 'id_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
     }
@@ -65,36 +73,64 @@ const DataService = (() => {
      */
     async function createUser(userData) {
         const uid = _uid();
-        const caseCode = _generateCaseCode();
-        const username = userData.username || uid.slice(0, 10).toLowerCase();
+        const username = ValidationUtils.normalizeUsername(userData.username || uid.slice(0, 10));
+        if (!ValidationUtils.isValidUsername(username)) {
+            throw new Error('Username must be 3-20 characters: lowercase letters, numbers, underscores only.');
+        }
 
-        const user = {
-            fullName: userData.fullName || '',
-            username,
-            bio: '',
-            role: '',
-            photoURL: userData.photoURL || null,
-            socialLinks: { github: '', linkedin: '', portfolio: '', twitter: '', instagram: '', youtube: '', leetcode: '', hackerrank: '', whatsapp: '', telegram: '' },
-            caseCode,
-            stats: { profileViews: 0 },
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        };
+        let createdUser = null;
+        await db.runTransaction(async (tx) => {
+            const userRef = db.collection('users').doc(uid);
+            const usernameRef = _usernameRef(username);
 
-        const batch = db.batch();
+            const [userSnap, usernameSnap] = await Promise.all([
+                tx.get(userRef),
+                tx.get(usernameRef),
+            ]);
 
-        // 1. Create user document
-        batch.set(db.collection('users').doc(uid), user);
+            if (userSnap.exists) {
+                throw new Error('Profile already exists for this account.');
+            }
+            if (usernameSnap.exists) {
+                throw new Error('Username is already taken. Try another one.');
+            }
 
-        // 2. Register CASE code for O(1) lookup
-        batch.set(db.collection('caseCodes').doc(caseCode), { uid });
+            let caseCode = null;
+            for (let attempt = 0; attempt < 5; attempt += 1) {
+                const candidate = _generateCaseCode();
+                const codeRef = _caseCodeRef(candidate);
+                const codeSnap = await tx.get(codeRef);
+                if (!codeSnap.exists) {
+                    caseCode = candidate;
+                    tx.set(codeRef, { uid });
+                    break;
+                }
+            }
 
-        // 3. Register username for uniqueness
-        batch.set(db.collection('usernames').doc(username), { uid });
+            if (!caseCode) {
+                throw new Error('Could not reserve a unique KEP code. Please try again.');
+            }
 
-        await batch.commit();
+            const user = {
+                fullName: userData.fullName || '',
+                username,
+                bio: '',
+                role: '',
+                photoURL: userData.photoURL || null,
+                socialLinks: { github: '', linkedin: '', portfolio: '', twitter: '', instagram: '', youtube: '', leetcode: '', hackerrank: '', whatsapp: '', telegram: '' },
+                caseCode,
+                stats: { profileViews: 0 },
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            };
+
+            tx.set(userRef, user);
+            tx.set(usernameRef, { uid });
+            createdUser = { uid, ...user };
+        });
+
         _cacheInvalidate('user');
-        return { uid, ...user };
+        return createdUser;
     }
 
     /**
@@ -106,32 +142,54 @@ const DataService = (() => {
     async function updateUser(updates) {
         const uid = _uid();
         const ref = _userRef();
+        const normalizedUpdates = { ...updates };
 
-        // If username is changing, update the usernames collection
-        if (updates.username) {
-            const oldSnap = await ref.get();
-            const oldUsername = oldSnap.data()?.username;
-
-            if (oldUsername && oldUsername !== updates.username) {
-                const batch = db.batch();
-                batch.delete(db.collection('usernames').doc(oldUsername));
-                batch.set(db.collection('usernames').doc(updates.username), { uid });
-                batch.update(ref, {
-                    ...updates,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                });
-                await batch.commit();
-                _cacheInvalidate('user');
-                return { uid, ...updates };
+        if (Object.prototype.hasOwnProperty.call(normalizedUpdates, 'username')) {
+            normalizedUpdates.username = ValidationUtils.normalizeUsername(normalizedUpdates.username);
+            if (!ValidationUtils.isValidUsername(normalizedUpdates.username)) {
+                throw new Error('Username must be 3-20 characters: lowercase letters, numbers, underscores only.');
             }
         }
 
+        if (Object.prototype.hasOwnProperty.call(normalizedUpdates, 'socialLinks')) {
+            normalizedUpdates.socialLinks = ValidationUtils.normalizeSocialLinks(normalizedUpdates.socialLinks || {});
+        }
+
+        // If username is changing, update the usernames collection
+        if (normalizedUpdates.username) {
+            await db.runTransaction(async (tx) => {
+                const userSnap = await tx.get(ref);
+                if (!userSnap.exists) {
+                    throw new Error('Profile not found.');
+                }
+
+                const oldUsername = userSnap.data()?.username;
+                if (oldUsername && oldUsername !== normalizedUpdates.username) {
+                    const nextUsernameRef = _usernameRef(normalizedUpdates.username);
+                    const nextUsernameSnap = await tx.get(nextUsernameRef);
+                    if (nextUsernameSnap.exists && nextUsernameSnap.data()?.uid !== uid) {
+                        throw new Error('Username is already taken. Try another one.');
+                    }
+
+                    tx.delete(_usernameRef(oldUsername));
+                    tx.set(nextUsernameRef, { uid });
+                }
+
+                tx.update(ref, {
+                    ...normalizedUpdates,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+            });
+            _cacheInvalidate('user');
+            return { uid, ...normalizedUpdates };
+        }
+
         await ref.update({
-            ...updates,
+            ...normalizedUpdates,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
         _cacheInvalidate('user');
-        return { uid, ...updates };
+        return { uid, ...normalizedUpdates };
     }
 
     /**
@@ -172,19 +230,20 @@ const DataService = (() => {
      * @returns {Promise<Object>} { available: boolean }
      */
     async function checkUsername(username) {
-        if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+        const normalized = ValidationUtils.normalizeUsername(username);
+        if (!ValidationUtils.isValidUsername(normalized)) {
             return { available: false, reason: 'Invalid format (3-20 lowercase letters, numbers, underscores)' };
         }
 
         // If user is logged in, allow them to keep their own username
         try {
             const user = await getUser();
-            if (user && user.username === username) return { available: true };
+            if (user && user.username === normalized) return { available: true };
         } catch (_) {
             // Not authenticated — that's fine for signup, continue checking
         }
 
-        const snap = await db.collection('usernames').doc(username).get();
+        const snap = await _usernameRef(normalized).get();
         return { available: !snap.exists };
     }
 
@@ -229,7 +288,7 @@ const DataService = (() => {
         const data = {
             name: project.name || '',
             description: project.description || '',
-            liveUrl: project.liveUrl || '',
+            liveUrl: ValidationUtils.normalizeExternalUrl(project.liveUrl || '', { errorMessage: 'Project link must be a valid HTTPS URL.' }),
             techStack: project.techStack || [],
             previewUrl: project.previewUrl || '',
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -248,12 +307,16 @@ const DataService = (() => {
      */
     async function updateProject(id, updates) {
         const ref = _userRef().collection('projects').doc(id);
+        const normalizedUpdates = { ...updates };
+        if (Object.prototype.hasOwnProperty.call(normalizedUpdates, 'liveUrl')) {
+            normalizedUpdates.liveUrl = ValidationUtils.normalizeExternalUrl(normalizedUpdates.liveUrl || '', { errorMessage: 'Project link must be a valid HTTPS URL.' });
+        }
         await ref.update({
-            ...updates,
+            ...normalizedUpdates,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
         _cacheInvalidate('projects');
-        return { id, ...updates };
+        return { id, ...normalizedUpdates };
     }
 
     /**

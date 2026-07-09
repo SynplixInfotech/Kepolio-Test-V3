@@ -43,3 +43,5 @@ ui-debug.log
 .agents/
 project-brain/
 .gitignore
+.vercel
+log/

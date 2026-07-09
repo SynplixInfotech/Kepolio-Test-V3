@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/generate-env.js"
+    "build": "node scripts/generate-env.js",
+    "test": "node --test"
   },
   "devDependencies": {
     "docx": "^9.6.0"

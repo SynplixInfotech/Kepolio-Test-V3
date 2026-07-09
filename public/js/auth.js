@@ -56,8 +56,9 @@ const AuthService = (() => {
      * @returns {Promise<Object>} user profile
      */
     async function signUp(email, password, fullName, username) {
+        username = ValidationUtils.normalizeUsername(username);
         // Validate username format
-        if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+        if (!ValidationUtils.isValidUsername(username)) {
             throw new Error('Username must be 3-20 characters: lowercase letters, numbers, underscores only.');
         }
 
@@ -114,7 +115,8 @@ const AuthService = (() => {
      * @returns {Promise<Object>} user profile
      */
     async function completeGoogleSignUp(username) {
-        if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+        username = ValidationUtils.normalizeUsername(username);
+        if (!ValidationUtils.isValidUsername(username)) {
             throw new Error('Username must be 3-20 characters: lowercase letters, numbers, underscores only.');
         }
 
