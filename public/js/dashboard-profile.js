@@ -164,6 +164,10 @@
             usernameLabel.textContent = expectedUsername;
 
             const provider = AuthService.getSignInProvider();
+            if (!provider) {
+                Utils.toast('Session expired. Please sign in again.', 'error');
+                return;
+            }
             passwordField.style.display = provider === 'password' ? '' : 'none';
 
             confirmInput.value = '';
@@ -190,9 +194,12 @@
                 // before it will allow deleting the account.
                 const provider = AuthService.getSignInProvider();
                 if (provider === 'password') {
+                    if (!passwordInput.value) throw new Error('Password is required.');
                     await AuthService.reauthenticateWithPassword(passwordInput.value);
                 } else if (provider === 'google.com') {
                     await AuthService.reauthenticateWithGoogle();
+                } else {
+                    throw new Error('Unable to verify your session. Please sign out and sign back in, then try again.');
                 }
 
                 // Delete all Firestore data first (while still authenticated),

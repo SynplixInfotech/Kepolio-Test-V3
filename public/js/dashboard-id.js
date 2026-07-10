@@ -362,8 +362,10 @@
             }
             const { jsPDF } = window.jspdf;
 
-            /* Temporarily render at full 1× size for capture */
-            if (stage)  stage.style.transform  = 'scale(1)';
+            /* Remove CSS transform entirely — let the card render at its
+               natural DOM size (638 × 1013) so html2canvas captures
+               the correct bounding box without transform-induced offsets. */
+            if (stage)  stage.style.transform  = 'none';
             if (viewer) {
                 viewer.style.width    = `${CARD_W}px`;
                 viewer.style.height   = `${CARD_H}px`;
@@ -377,6 +379,8 @@
                 backgroundColor: '#ffffff',
                 width:  CARD_W,
                 height: CARD_H,
+                windowWidth:  CARD_W,
+                windowHeight: CARD_H,
                 scrollX: 0,
                 scrollY: 0,
             };
