@@ -30,6 +30,9 @@ test('PDF export waits for the visible face layout to settle before capture', ()
 
     assert.match(js, /async function _waitForStableCapture\(/);
     assert.match(js, /requestAnimationFrame\(\(\) => requestAnimationFrame\(resolve\)\)/);
-    assert.match(js, /const frontCanvas = await _captureFace\('front', front, back, captureOpts\);/);
-    assert.match(js, /const backCanvas = await _captureFace\('back', front, back, captureOpts\);/);
+    assert.match(js, /let _isCapturingForExport = false;/);
+    assert.match(js, /if \(_isCapturingForExport\) return;/);
+    assert.match(js, /return html2canvas\(stage, captureOpts\);/);
+    assert.match(js, /const frontCanvas = await _captureFace\('front', front, back, stage, captureOpts\);/);
+    assert.match(js, /const backCanvas = await _captureFace\('back', front, back, stage, captureOpts\);/);
 });

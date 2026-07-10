@@ -22,6 +22,8 @@
     /* ─── Module state ─── */
     let _user = null;
     let _face = 'front';   // 'front' | 'back'
+    let _resizeObserver = null;
+    let _isCapturingForExport = false;
 
     /* ════════════════════════════════════════════════
        INLINE ASSETS
@@ -202,6 +204,8 @@
     ════════════════════════════════════════════════ */
 
     function _applyScale() {
+        if (_isCapturingForExport) return;
+
         const viewer = $('#kepIdViewer');
         if (!viewer) return;
 
@@ -250,7 +254,7 @@
         await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     }
 
-    async function _captureFace(face, front, back, captureOpts) {
+    async function _captureFace(face, front, back, stage, captureOpts) {
         if (face === 'front') {
             if (front) front.style.display = '';
             if (back) back.style.display = 'none';
@@ -260,7 +264,9 @@
         }
 
         await _waitForStableCapture();
-        return html2canvas(face === 'front' ? front : back, captureOpts);
+        /* Capture the fixed-size stage — not the absolutely positioned face —
+           so html2canvas uses a stable origin without transform offsets. */
+        return html2canvas(stage, captureOpts);
     }
 
     /* ════════════════════════════════════════════════
@@ -322,8 +328,9 @@
 
         /* Watch container for resize */
         if (window.ResizeObserver) {
-            const ro = new ResizeObserver(_applyScale);
-            ro.observe(container);
+            _resizeObserver?.disconnect();
+            _resizeObserver = new ResizeObserver(_applyScale);
+            _resizeObserver.observe(container);
         } else {
             window.addEventListener('resize', _applyScale);
         }
@@ -344,16 +351,12 @@
         const front  = $('#kep-card-front');
         const back   = $('#kep-card-back');
 
-        /* Save current visual state */
-        const savedTransform = stage  ? stage.style.transform  : '';
-        const savedW         = viewer ? viewer.style.width     : '';
-        const savedH         = viewer ? viewer.style.height    : '';
-        const savedOverflow  = viewer ? viewer.style.overflow  : '';
-
         if (dlBtn) {
             dlBtn.disabled = true;
             dlBtn.textContent = 'Generating PDF…';
         }
+
+        _isCapturingForExport = true;
 
         try {
             if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
@@ -362,10 +365,14 @@
             }
             const { jsPDF } = window.jspdf;
 
-            /* Remove CSS transform entirely — let the card render at its
-               natural DOM size (638 × 1013) so html2canvas captures
-               the correct bounding box without transform-induced offsets. */
-            if (stage)  stage.style.transform  = 'none';
+            if (!stage) {
+                Utils.toast('ID card not ready. Please try again.', 'error');
+                return;
+            }
+
+            /* Render at full artwork size with no CSS transform so html2canvas
+               captures the stage bounding box exactly. */
+            stage.style.transform = 'none';
             if (viewer) {
                 viewer.style.width    = `${CARD_W}px`;
                 viewer.style.height   = `${CARD_H}px`;
@@ -379,23 +386,12 @@
                 backgroundColor: '#ffffff',
                 width:  CARD_W,
                 height: CARD_H,
-                windowWidth:  CARD_W,
-                windowHeight: CARD_H,
                 scrollX: 0,
                 scrollY: 0,
             };
 
-            const frontCanvas = await _captureFace('front', front, back, captureOpts);
-            const backCanvas = await _captureFace('back', front, back, captureOpts);
-
-            /* Restore */
-            if (stage)  stage.style.transform  = savedTransform;
-            if (viewer) {
-                viewer.style.width    = savedW;
-                viewer.style.height   = savedH;
-                viewer.style.overflow = savedOverflow;
-            }
-            _syncFaceDisplay();
+            const frontCanvas = await _captureFace('front', front, back, stage, captureOpts);
+            const backCanvas = await _captureFace('back', front, back, stage, captureOpts);
 
             /* Build PDF — card px → mm at 96 dpi */
             const MM   = 25.4 / 96;
@@ -418,19 +414,14 @@
 
         } catch (err) {
             console.error('[KePolioID] PDF error:', err);
-
-            /* Restore on failure */
-            if (stage)  stage.style.transform  = savedTransform;
-            if (viewer) {
-                viewer.style.width    = savedW;
-                viewer.style.height   = savedH;
-                viewer.style.overflow = savedOverflow;
-            }
-            _syncFaceDisplay();
-
             Utils.toast('Download failed. Please try again.', 'error');
 
         } finally {
+            _isCapturingForExport = false;
+            _syncFaceDisplay();
+            if (viewer) viewer.style.overflow = '';
+            _applyScale();
+
             if (dlBtn) {
                 dlBtn.disabled = false;
                 dlBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
