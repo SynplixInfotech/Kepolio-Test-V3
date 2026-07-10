@@ -127,5 +127,86 @@
                 saveBtn.disabled = false;
             }
         });
+
+        initDeleteAccount();
     };
+
+    /* ═══════════════ Delete Account ═══════════════ */
+    function initDeleteAccount() {
+        const openBtn = $('#deleteAccountBtn');
+        const modal = $('#deleteAccountModal');
+        const usernameLabel = $('#deleteAccountUsername');
+        const confirmInput = $('#deleteAccountConfirmInput');
+        const passwordField = $('#deleteAccountPasswordField');
+        const passwordInput = $('#deleteAccountPasswordInput');
+        const confirmBtn = $('#deleteAccountModalConfirm');
+        if (!openBtn || !modal) return;
+
+        let expectedUsername = '';
+
+        function refreshConfirmState() {
+            const usernameOk = confirmInput.value.trim() === expectedUsername && expectedUsername !== '';
+            const passwordOk = passwordField.style.display === 'none' || passwordInput.value.length > 0;
+            confirmBtn.disabled = !(usernameOk && passwordOk);
+        }
+
+        function closeModal() {
+            Utils.closeModal(modal);
+            confirmInput.value = '';
+            passwordInput.value = '';
+            confirmBtn.textContent = 'Delete My Account';
+            confirmBtn.disabled = true;
+        }
+
+        openBtn.addEventListener('click', async () => {
+            const user = await DataService.getUser();
+            expectedUsername = user?.username || '';
+            usernameLabel.textContent = expectedUsername;
+
+            const provider = AuthService.getSignInProvider();
+            passwordField.style.display = provider === 'password' ? '' : 'none';
+
+            confirmInput.value = '';
+            passwordInput.value = '';
+            confirmBtn.disabled = true;
+            Utils.openModal(modal);
+        });
+
+        $('#deleteAccountModalClose')?.addEventListener('click', closeModal);
+        $('#deleteAccountModalCancel')?.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        confirmInput.addEventListener('input', refreshConfirmState);
+        passwordInput.addEventListener('input', refreshConfirmState);
+
+        confirmBtn.addEventListener('click', async () => {
+            if (confirmInput.value.trim() !== expectedUsername) return;
+
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = 'Deleting...';
+
+            try {
+                // Reauthenticate first — Firebase requires a "recent" login
+                // before it will allow deleting the account.
+                const provider = AuthService.getSignInProvider();
+                if (provider === 'password') {
+                    await AuthService.reauthenticateWithPassword(passwordInput.value);
+                } else if (provider === 'google.com') {
+                    await AuthService.reauthenticateWithGoogle();
+                }
+
+                // Delete all Firestore data first (while still authenticated),
+                // then the Auth account itself (this ends the session).
+                await DataService.deleteAccountData();
+                await AuthService.deleteAuthAccount();
+
+                Utils.toast('Account deleted', 'success');
+                setTimeout(() => { window.location.href = '/'; }, 800);
+            } catch (err) {
+                Utils.toast(AuthService.getErrorMessage(err), 'error');
+                confirmBtn.textContent = 'Delete My Account';
+                refreshConfirmState();
+            }
+        });
+    }
 })();

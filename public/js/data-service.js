@@ -642,6 +642,50 @@ const DataService = (() => {
     }
 
     // ═══════════════════════════════════════
+    //  ACCOUNT DELETION
+    // ═══════════════════════════════════════
+
+    /**
+     * Permanently delete the current user's Firestore data: every
+     * subcollection doc (projects, certificates, qualifications,
+     * experiences), the username + caseCode lookup docs, and the
+     * users/{uid} doc itself. Does NOT delete the Firebase Auth user or
+     * any Cloudinary assets — call AuthService.deleteAuthAccount()
+     * separately once this resolves.
+     *
+     * All subcollections are capped at 10 docs each, so the whole
+     * deletion (up to ~40 docs + 3 lookup docs) fits in a single
+     * Firestore batch (500-op limit).
+     * @returns {Promise<void>}
+     */
+    async function deleteAccountData() {
+        const uid = _uid();
+        const userRef = _userRef();
+
+        const userSnap = await userRef.get();
+        if (!userSnap.exists) throw new Error('Profile not found.');
+        const userData = userSnap.data();
+
+        const [projSnap, certSnap, qualSnap, expSnap] = await Promise.all([
+            userRef.collection('projects').get(),
+            userRef.collection('certificates').get(),
+            userRef.collection('qualifications').get(),
+            userRef.collection('experiences').get(),
+        ]);
+
+        const batch = db.batch();
+        [...projSnap.docs, ...certSnap.docs, ...qualSnap.docs, ...expSnap.docs]
+            .forEach(doc => batch.delete(doc.ref));
+
+        if (userData.username) batch.delete(_usernameRef(userData.username));
+        if (userData.caseCode) batch.delete(_caseCodeRef(userData.caseCode));
+        batch.delete(userRef);
+
+        await batch.commit();
+        _cacheInvalidate('user', 'projects', 'certificates', 'qualifications', 'experiences');
+    }
+
+    // ═══════════════════════════════════════
     //  PUBLIC API
     // ═══════════════════════════════════════
 
@@ -652,6 +696,7 @@ const DataService = (() => {
         getProfileCompletion,
         checkUsername,
         incrementViews,
+        deleteAccountData,
         getProjects,
         addProject,
         updateProject,

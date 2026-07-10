@@ -151,6 +151,51 @@ const AuthService = (() => {
     }
 
     /**
+     * Get the sign-in provider id for the current user
+     * (e.g. 'password', 'google.com'). Used to pick the right
+     * reauthentication flow before sensitive operations.
+     * @returns {string|null}
+     */
+    function getSignInProvider() {
+        const user = auth.currentUser;
+        if (!user || !user.providerData.length) return null;
+        return user.providerData[0].providerId;
+    }
+
+    /**
+     * Re-authenticate the current user with their password.
+     * Required by Firebase before sensitive ops (e.g. delete account)
+     * if the sign-in session isn't "recent".
+     * @param {string} password
+     */
+    async function reauthenticateWithPassword(password) {
+        const user = auth.currentUser;
+        if (!user || !user.email) throw new Error('Not authenticated.');
+        const cred = firebase.auth.EmailAuthProvider.credential(user.email, password);
+        await user.reauthenticateWithCredential(cred);
+    }
+
+    /**
+     * Re-authenticate the current user via a Google popup.
+     */
+    async function reauthenticateWithGoogle() {
+        const user = auth.currentUser;
+        if (!user) throw new Error('Not authenticated.');
+        await user.reauthenticateWithPopup(googleProvider);
+    }
+
+    /**
+     * Permanently delete the current Firebase Auth user.
+     * Caller is responsible for deleting associated Firestore data first
+     * (see DataService.deleteAccountData) since this ends the session.
+     */
+    async function deleteAuthAccount() {
+        const user = auth.currentUser;
+        if (!user) throw new Error('Not authenticated.');
+        await user.delete();
+    }
+
+    /**
      * Map Firebase Auth error codes to user-friendly messages.
      * @param {Error} error — Firebase auth error
      * @returns {string}
@@ -218,5 +263,9 @@ const AuthService = (() => {
         getErrorMessage,
         requireAuth,
         redirectIfAuth,
+        getSignInProvider,
+        reauthenticateWithPassword,
+        reauthenticateWithGoogle,
+        deleteAuthAccount,
     };
 })();

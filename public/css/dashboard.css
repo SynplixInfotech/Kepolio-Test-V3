@@ -511,6 +511,16 @@
   border-radius: 0 var(--radius-btn) var(--radius-btn) 0;
 }
 
+/* Danger Zone */
+.danger-zone {
+  max-width: 640px;
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-card);
+  background: rgba(239, 68, 68, 0.04);
+}
+
 /* Sticky Save */
 .profile-form__save {
   position: sticky;

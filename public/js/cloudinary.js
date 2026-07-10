@@ -39,7 +39,11 @@ async function uploadProfilePhoto(file, userId) {
     if (file.size > 5 * 1024 * 1024)
         throw new Error('Photo too large. Maximum size is 5MB.');
 
-    const data = await _uploadToCloudinary(file, `case/profiles/${userId}`);
+    // Unique public_id per upload — reusing the same public_id here caused
+    // repeat uploads to silently no-op (unsigned presets can't force
+    // overwrite without a signed request), so the photo appeared "stuck"
+    // and never actually updated.
+    const data = await _uploadToCloudinary(file, `case/profiles/${userId}_${Date.now()}`);
     return data.secure_url.replace('/upload/', `/upload/${PHOTO_TRANSFORM}/`);
 }
 

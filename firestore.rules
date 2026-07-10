@@ -35,8 +35,8 @@ service cloud.firestore {
           request.resource.data.stats.diff(resource.data.stats).affectedKeys().hasOnly(['profileViews'])
         );
 
-      // Users cannot delete their own document (admin only)
-      allow delete: if false;
+      // Owner can delete their own document (account deletion)
+      allow delete: if isOwner(uid);
 
       // ── Projects subcollection ──
       // users/{uid}/projects/{projectId}
@@ -99,9 +99,9 @@ service cloud.firestore {
       // and only if the uid field matches the auth user
       allow create: if isAuth() && request.resource.data.uid == request.auth.uid;
 
-      // No updates or deletes
+      // No updates; only the owner can delete (account deletion)
       allow update: if false;
-      allow delete: if false;
+      allow delete: if isAuth() && resource.data.uid == request.auth.uid;
     }
 
     // ═══════════════════════════════════════
