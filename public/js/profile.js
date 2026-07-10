@@ -485,6 +485,10 @@
                         <span class="pub-cert-card__badge">🏅</span>
                         <span class="pub-cert-card__name">${Utils.escapeHTML(c.name)}</span>
                     </div>
+                    ${(c.organization || c.date) ? `<div class="pub-cert-card__meta">
+                        ${c.organization ? `<span>${Utils.escapeHTML(c.organization)}</span>` : ''}
+                        ${c.date ? `<span>${c.organization ? '· ' : ''}${Utils.escapeHTML(Utils.formatDate(c.date))}</span>` : ''}
+                    </div>` : ''}
                     <span class="pub-cert-card__view">Preview →</span>
                 </div>
             </div>

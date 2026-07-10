@@ -66,8 +66,9 @@
             const year = $('#qualYear').value.trim();
             const grade = $('#qualGrade').value.trim();
 
-            if (!degree || !institution) {
-                Utils.toast('Please fill degree and institution', 'error');
+            const errors = ValidationUtils.validateQualification({ degree, institution, year, grade });
+            if (errors.length) {
+                Utils.toast(errors[0], 'error');
                 return;
             }
 

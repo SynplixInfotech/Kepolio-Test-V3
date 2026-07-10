@@ -94,6 +94,73 @@
         }
     }
 
+    // Disallows angle brackets / template / script-injection characters.
+    // Not a format check — just a length + "no markup" guard on free text.
+    const PLAIN_TEXT_RE = /^[^<>{}$`]*$/;
+
+    function isValidPlainText(value, { min = 0, max = 200 } = {}) {
+        const v = String(value == null ? '' : value).trim();
+        if (v.length < min || v.length > max) return false;
+        return PLAIN_TEXT_RE.test(v);
+    }
+
+    function validateQualification({ degree, institution, year, grade } = {}) {
+        const errors = [];
+        if (!isValidPlainText(degree, { min: 2, max: 100 })) {
+            errors.push('Degree / Course must be 2–100 characters.');
+        }
+        if (!isValidPlainText(institution, { min: 2, max: 100 })) {
+            errors.push('Institution must be 2–100 characters.');
+        }
+        if (year && !isValidPlainText(year, { min: 2, max: 30 })) {
+            errors.push('Year must be 2–30 characters.');
+        }
+        if (grade && !isValidPlainText(grade, { min: 1, max: 20 })) {
+            errors.push('Grade / CGPA must be under 20 characters.');
+        }
+        return errors;
+    }
+
+    function validateExperience({ title, company, duration, description } = {}) {
+        const errors = [];
+        if (!isValidPlainText(title, { min: 2, max: 100 })) {
+            errors.push('Role / Title must be 2–100 characters.');
+        }
+        if (!isValidPlainText(company, { min: 2, max: 100 })) {
+            errors.push('Company / Organization must be 2–100 characters.');
+        }
+        if (duration && !isValidPlainText(duration, { min: 2, max: 40 })) {
+            errors.push('Duration must be 2–40 characters.');
+        }
+        if (description && !isValidPlainText(description, { min: 1, max: 300 })) {
+            errors.push('Description must be under 300 characters.');
+        }
+        return errors;
+    }
+
+    function isValidCertDate(dateStr) {
+        if (!dateStr) return false;
+        const d = new Date(dateStr);
+        if (Number.isNaN(d.getTime())) return false;
+        const today = new Date();
+        today.setHours(23, 59, 59, 999);
+        return d <= today;
+    }
+
+    function validateCertificate({ name, organization, date } = {}) {
+        const errors = [];
+        if (!isValidPlainText(name, { min: 2, max: 100 })) {
+            errors.push('Certificate name must be 2–100 characters.');
+        }
+        if (!isValidPlainText(organization, { min: 2, max: 100 })) {
+            errors.push('Organization name must be 2–100 characters.');
+        }
+        if (!isValidCertDate(date)) {
+            errors.push('Enter a valid issue date (not in the future).');
+        }
+        return errors;
+    }
+
     return {
         normalizeUsername,
         isValidUsername,
@@ -101,5 +168,10 @@
         normalizeWhatsAppLink,
         normalizeSocialLinks,
         safeExternalHref,
+        isValidPlainText,
+        validateQualification,
+        validateExperience,
+        validateCertificate,
+        isValidCertDate,
     };
 });

@@ -7,14 +7,33 @@
 
     const { $, $$, state } = Dashboard;
 
+    function closeSidebar() {
+        $('#sidebar')?.classList.remove('open');
+        document.querySelector('.sidebar-backdrop')?.classList.remove('visible');
+        const toggle = $('#sidebarToggle');
+        if (toggle) {
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.textContent = '☰';
+        }
+    }
+
+    function openSidebar() {
+        $('#sidebar')?.classList.add('open');
+        document.querySelector('.sidebar-backdrop')?.classList.add('visible');
+        const toggle = $('#sidebarToggle');
+        if (toggle) {
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.textContent = '✕';
+        }
+    }
+
     function switchSection(section) {
         state.currentSection = section;
         $$('.sidebar__link[data-section]').forEach(l => l.classList.remove('active'));
         $(`.sidebar__link[data-section="${section}"]`)?.classList.add('active');
         $$('.main__section').forEach(s => s.classList.remove('active'));
         $(`#sec-${section}`)?.classList.add('active');
-        $('#sidebar')?.classList.remove('open');
-        document.querySelector('.sidebar-backdrop')?.classList.remove('visible');
+        closeSidebar();
         Dashboard.loadSectionData(section);
     }
 
@@ -53,23 +72,17 @@
 
             toggle.addEventListener('click', () => {
                 if (sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                    sidebarBackdrop.classList.remove('visible');
+                    closeSidebar();
                 } else {
-                    sidebar.classList.add('open');
-                    sidebarBackdrop.classList.add('visible');
+                    openSidebar();
                 }
             });
 
-            sidebarBackdrop.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                sidebarBackdrop.classList.remove('visible');
-            });
+            sidebarBackdrop.addEventListener('click', closeSidebar);
 
             document.addEventListener('keydown', e => {
                 if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                    sidebarBackdrop.classList.remove('visible');
+                    closeSidebar();
                 }
             });
         }

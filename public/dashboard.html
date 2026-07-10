@@ -44,7 +44,7 @@
   <div class="dash">
 
     <!-- ═══════════════ SIDEBAR ═══════════════ -->
-    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu">☰</button>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="sidebar">☰</button>
 
     <aside class="sidebar" id="sidebar">
       <a href="/" class="sidebar__logo">
@@ -393,11 +393,19 @@
         <div class="certs-add" id="certsAddForm">
           <div class="certs-add__fields">
             <div class="field">
-              <label class="field__label" for="certName">Certificate Name</label>
-              <input type="text" class="input" id="certName" placeholder="e.g. AWS Solutions Architect" />
+              <label class="field__label" for="certName">Certificate Name *</label>
+              <input type="text" class="input" id="certName" placeholder="e.g. AWS Solutions Architect" maxlength="100" />
             </div>
             <div class="field">
-              <label class="field__label" for="certImage">Certificate Image</label>
+              <label class="field__label" for="certOrg">Organization Name *</label>
+              <input type="text" class="input" id="certOrg" placeholder="e.g. Amazon Web Services" maxlength="100" />
+            </div>
+            <div class="field">
+              <label class="field__label" for="certDate">Issue Date *</label>
+              <input type="date" class="input" id="certDate" />
+            </div>
+            <div class="field">
+              <label class="field__label" for="certImage">Certificate Image *</label>
               <input type="file" class="input" id="certImage" accept="image/jpeg,image/png,image/webp" />
               <div class="field__hint">JPG, PNG, WEBP · Max 8MB · No PDFs</div>
             </div>
@@ -418,21 +426,21 @@
           <div class="quals-add__row">
             <div class="field">
               <label class="field__label" for="qualDegree">Degree / Course *</label>
-              <input type="text" class="input" id="qualDegree" placeholder="e.g. B.Tech, B.A., B.Com, B.Sc., BBA" />
+              <input type="text" class="input" id="qualDegree" placeholder="e.g. B.Tech, B.A., B.Com, B.Sc., BBA" maxlength="100" />
             </div>
             <div class="field">
               <label class="field__label" for="qualInstitution">Institution *</label>
-              <input type="text" class="input" id="qualInstitution" placeholder="e.g. MIT" />
+              <input type="text" class="input" id="qualInstitution" placeholder="e.g. MIT" maxlength="100" />
             </div>
           </div>
           <div class="quals-add__row">
             <div class="field">
               <label class="field__label" for="qualYear">Year</label>
-              <input type="text" class="input" id="qualYear" placeholder="e.g. 2020 – 2024" />
+              <input type="text" class="input" id="qualYear" placeholder="e.g. 2020 – 2024" maxlength="30" />
             </div>
             <div class="field">
               <label class="field__label" for="qualGrade">Grade / CGPA</label>
-              <input type="text" class="input" id="qualGrade" placeholder="e.g. 8.5 CGPA" />
+              <input type="text" class="input" id="qualGrade" placeholder="e.g. 8.5 CGPA" maxlength="20" />
             </div>
           </div>
           <button class="btn btn--primary" id="addQualBtn">+ Add Qualification</button>
@@ -451,21 +459,21 @@
           <div class="exps-add__row">
             <div class="field">
               <label class="field__label" for="expTitle">Role / Title *</label>
-              <input type="text" class="input" id="expTitle" placeholder="e.g. Marketing Intern, Developer Intern, Design Trainee" />
+              <input type="text" class="input" id="expTitle" placeholder="e.g. Marketing Intern, Developer Intern, Design Trainee" maxlength="100" />
             </div>
             <div class="field">
               <label class="field__label" for="expCompany">Company / Organization *</label>
-              <input type="text" class="input" id="expCompany" placeholder="e.g. Google" />
+              <input type="text" class="input" id="expCompany" placeholder="e.g. Google" maxlength="100" />
             </div>
           </div>
           <div class="exps-add__row">
             <div class="field">
               <label class="field__label" for="expDuration">Duration</label>
-              <input type="text" class="input" id="expDuration" placeholder="e.g. Jun 2024 – Aug 2024" />
+              <input type="text" class="input" id="expDuration" placeholder="e.g. Jun 2024 – Aug 2024" maxlength="40" />
             </div>
             <div class="field">
               <label class="field__label" for="expDesc">Description</label>
-              <input type="text" class="input" id="expDesc" placeholder="Brief about your role" />
+              <input type="text" class="input" id="expDesc" placeholder="Brief about your role" maxlength="300" />
             </div>
           </div>
           <button class="btn btn--primary" id="addExpBtn">+ Add Experience</button>

@@ -193,6 +193,14 @@ const Utils = (() => {
         return div.innerHTML;
     }
 
+    // ── Format a YYYY-MM-DD date string for display (e.g. "Jan 2024") ──
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        if (Number.isNaN(d.getTime())) return dateStr;
+        return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    }
+
     // ── WhatsApp Share ──
     function shareWhatsApp(url, message) {
         const text = encodeURIComponent(message || `Check out my portfolio: ${url}`);
@@ -217,6 +225,7 @@ const Utils = (() => {
         openModal,
         closeModal,
         debounce,
+        formatDate,
         timeAgo,
         escapeHTML,
         shareWhatsApp,

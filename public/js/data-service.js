@@ -258,6 +258,38 @@ const DataService = (() => {
         });
     }
 
+    const VIEW_DEDUPE_WINDOW_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+    /**
+     * Decide whether this browser should count as a new view of `uid`'s
+     * profile. Dedupes per-visitor (localStorage) for 24h so repeat/refresh
+     * views from the same visitor don't inflate the counter; after the
+     * window elapses the next view counts again.
+     *
+     * Note: this is a client-side (per-browser) dedupe, not a true
+     * server-verified per-IP check — the app has no backend to read the
+     * real client IP from. It's easily bypassed by a different browser,
+     * incognito mode, or clearing storage, but covers normal repeat visits.
+     * @param {string} uid
+     * @returns {boolean}
+     */
+    function _shouldCountView(uid) {
+        try {
+            const key = `kp_view_${uid}`;
+            const last = window.localStorage.getItem(key);
+            const now = Date.now();
+            if (last && (now - parseInt(last, 10)) < VIEW_DEDUPE_WINDOW_MS) {
+                return false;
+            }
+            window.localStorage.setItem(key, String(now));
+            return true;
+        } catch (_) {
+            // localStorage unavailable (private mode, disabled, etc.) —
+            // fall back to always counting rather than losing the view.
+            return true;
+        }
+    }
+
     // ═══════════════════════════════════════
     //  PROJECTS (subcollection)
     // ═══════════════════════════════════════
@@ -350,7 +382,7 @@ const DataService = (() => {
 
     /**
      * Add a new certificate.
-     * @param {Object} cert — { name, imageUrl }
+     * @param {Object} cert — { name, organization, date, imageUrl }
      * @returns {Promise<Object>}
      */
     async function addCertificate(cert) {
@@ -360,6 +392,8 @@ const DataService = (() => {
         const id = _generateId();
         const data = {
             name: cert.name || '',
+            organization: cert.organization || '',
+            date: cert.date || '',
             imageUrl: cert.imageUrl || '',
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         };
@@ -584,8 +618,11 @@ const DataService = (() => {
         const userSnap = await db.collection('users').doc(uid).get();
         if (!userSnap.exists) return { found: false };
 
-        // Increment view count (fire-and-forget — never block profile load)
-        incrementViews(uid).catch(() => {});
+        // Increment view count (fire-and-forget — never block profile load),
+        // deduped per-visitor for 24h so refreshes/repeat visits don't inflate it.
+        if (_shouldCountView(uid)) {
+            incrementViews(uid).catch(() => {});
+        }
 
         // Fetch projects, certificates, qualifications & experiences in parallel
         const [projSnap, certSnap, qualSnap, expSnap] = await Promise.all([

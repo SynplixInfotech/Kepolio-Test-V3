@@ -66,8 +66,9 @@
             const duration = $('#expDuration').value.trim();
             const description = $('#expDesc').value.trim();
 
-            if (!title || !company) {
-                Utils.toast('Please fill title and company', 'error');
+            const errors = ValidationUtils.validateExperience({ title, company, duration, description });
+            if (errors.length) {
+                Utils.toast(errors[0], 'error');
                 return;
             }
 
