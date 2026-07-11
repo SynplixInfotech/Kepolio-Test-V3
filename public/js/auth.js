@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Authentication Service
+   KePolio — Authentication Service
    Email/Password + Google Sign-In
    Requires firebase-config.js to be loaded first.
    ═══════════════════════════════════════════════════ */

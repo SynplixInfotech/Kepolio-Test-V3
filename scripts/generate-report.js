@@ -141,9 +141,9 @@ function simpleTable(headers, rows, colWidths) {
 
 function buildDocument() {
   const doc = new Document({
-    creator: "CASE Team",
-    title: "CASE – Comprehensive Project Report",
-    description: "Full technical and business report for CASE portfolio platform",
+    creator: "KePolio Team",
+    title: "KePolio – Comprehensive Project Report",
+    description: "Full technical and business report for KePolio portfolio platform",
     styles: {
       default: {
         document: {
@@ -160,7 +160,7 @@ function buildDocument() {
           new Paragraph({
             alignment: AlignmentType.CENTER,
             spacing: { after: 200 },
-            children: [new TextRun({ text: "CASE", size: 72, bold: true, color: BLUE, font: "Segoe UI" })],
+              children: [new TextRun({ text: "KePolio", size: 72, bold: true, color: BLUE, font: "Segoe UI" })],
           }),
           new Paragraph({
             alignment: AlignmentType.CENTER,
@@ -176,8 +176,8 @@ function buildDocument() {
           emptyLine(), emptyLine(), emptyLine(), emptyLine(),
           para("Version: 1.0.0 (Public Beta)", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
           para("Date: March 2026", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
-          para("Prepared by: CASE Development Team", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
-          para("Contact: admin.casev1@gmail.com", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
+          para("Prepared by: KePolio Development Team", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
+          para("Contact: support@kepolio.in", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
         ],
       },
 
@@ -219,7 +219,7 @@ function buildDocument() {
               new Paragraph({
                 alignment: AlignmentType.CENTER,
                 children: [
-                  new TextRun({ text: "CASE — Comprehensive Project Report | Page ", size: 16, color: GRAY, font: "Segoe UI" }),
+                  new TextRun({ text: "KePolio — Comprehensive Project Report | Page ", size: 16, color: GRAY, font: "Segoe UI" }),
                   new TextRun({ children: [PageNumber.CURRENT], size: 16, color: GRAY, font: "Segoe UI" }),
                 ],
               }),
@@ -230,7 +230,7 @@ function buildDocument() {
           // ── 1. Executive Summary ──
           heading("1. Executive Summary"),
           para(
-            "CASE (Code. Access. Share. Everywhere.) is a free, modern portfolio management platform designed specifically for students, freshers, and bootcamp graduates. It enables users to build professional portfolios showcasing their projects, certificates, qualifications, and experience — then share them instantly via a unique CASE code, a shareable URL (@username), or a QR code."
+            "KePolio (Know Everyone's Portfolio) is a free, modern portfolio management platform designed specifically for students, freshers, and bootcamp graduates. It enables users to build professional portfolios showcasing their projects, certificates, qualifications, and experience — then share them instantly via a unique KePolio code, a shareable URL (@username), or a QR code."
           ),
           para(
             "The platform is currently in Public Beta (launched March 1, 2026). It is built as a fully client-side static web application powered by Firebase for authentication and database, Cloudinary for image management, and deployed on Vercel with zero server infrastructure to maintain."
@@ -257,19 +257,19 @@ function buildDocument() {
           // ── 2. Project Overview & Working ──
           heading("2. Project Overview & Working"),
           para(
-            "CASE solves a real problem: students and early-career professionals often lack a quick, professional way to present their work to recruiters, mentors, and peers. LinkedIn profiles are generic; personal portfolio websites require technical skills and maintenance. CASE bridges this gap."
+            "KePolio solves a real problem: students and early-career professionals often lack a quick, professional way to present their work to recruiters, mentors, and peers. LinkedIn profiles are generic; personal portfolio websites require technical skills and maintenance. KePolio bridges this gap."
           ),
           emptyLine(),
           heading("How It Works", HeadingLevel.HEADING_2),
-          boldBullet("Step 1 — Sign Up:", "Users create an account using email/password or Google OAuth. They choose a unique username (3–20 chars, lowercase, numbers, underscores). A unique CASE code (e.g., CASE-ABC12) is auto-generated."),
+          boldBullet("Step 1 — Sign Up:", "Users create an account using email/password or Google OAuth. They choose a unique username (3–20 chars, lowercase, numbers, underscores). A unique KePolio code (e.g., KePolio-ABC12) is auto-generated."),
           boldBullet("Step 2 — Build Profile:", "From the dashboard, users upload a profile photo, write a bio (160 chars max), set a role/title, and add social media links (GitHub, LinkedIn, Portfolio, Twitter, Instagram, YouTube, LeetCode, HackerRank, WhatsApp, Telegram)."),
           boldBullet("Step 3 — Add Content:", "Users add projects (with live URLs, tech-stack tags, preview images), certificates (image uploads, max 10), qualifications (degree, institution, year, CGPA), and experiences (role, company, duration, description)."),
-          boldBullet("Step 4 — Share:", "Each profile is accessible at /@username. Users share via their CASE code, direct URL, QR code (downloadable), WhatsApp, or email. Anyone can discover profiles by entering a CASE code on the /explore page."),
+          boldBullet("Step 4 — Share:", "Each profile is accessible at /@username. Users share via their KePolio code, direct URL, QR code (downloadable), WhatsApp, or email. Anyone can discover profiles by entering a KePolio code on the /explore page."),
           emptyLine(),
           heading("Core Value Propositions", HeadingLevel.HEADING_2),
           bullet("Zero technical barrier — no coding, hosting, or domain required"),
-          bullet("Professional, unique shareable profile link (case.app/@username)"),
-          bullet("CASE codes for instant, link-free discovery"),
+          bullet("Professional, unique shareable profile link (kepolio.in/@username)"),
+          bullet("KePolio codes for instant, link-free discovery"),
           bullet("Complete portfolio: projects, certificates, qualifications, experiences"),
           bullet("One-click sharing via QR, WhatsApp, email, link copy"),
           bullet("100% free — no premium tiers, no limits on core features"),
@@ -328,8 +328,8 @@ function buildDocument() {
               ["scripts/generate-env.js", "Node.js", "Build script — generates firebase-env.js from env vars"],
               ["", "", ""],
               ["public/auth.html", "HTML", "Authentication page — login, signup, password reset, Google OAuth"],
-              ["public/dashboard.html", "HTML", "User dashboard — profile editing, project management, CASE code"],
-              ["public/explore.html", "HTML", "Profile discovery — enter CASE code to view any profile"],
+              ["public/dashboard.html", "HTML", "User dashboard — profile editing, project management, KePolio code"],
+              ["public/explore.html", "HTML", "Profile discovery — enter KePolio code to view any profile"],
               ["public/profile.html", "HTML", "Public profile view — rendered portfolio page (/@username)"],
               ["public/about.html", "HTML", "About page — mission, values, team, contact"],
               ["public/blog.html", "HTML", "Blog — articles on portfolio tips, platform updates"],
@@ -344,7 +344,7 @@ function buildDocument() {
               ["public/js/auth-page.js", "JS", "Auth page controller — form handling, validation, card switching"],
               ["public/js/dashboard-helpers.js", "JS", "Dashboard shared helpers & namespace object"],
               ["public/js/dashboard-nav.js", "JS", "Dashboard sidebar navigation & section switching"],
-              ["public/js/dashboard-overview.js", "JS", "Dashboard overview section — stats, CASE code panel, QR"],
+              ["public/js/dashboard-overview.js", "JS", "Dashboard overview section — stats, KePolio code panel, QR"],
               ["public/js/dashboard-profile.js", "JS", "Dashboard edit profile section — form, avatar, username check"],
               ["public/js/dashboard-projects.js", "JS", "Dashboard projects section — CRUD modal, tags, image upload"],
               ["public/js/dashboard-certs.js", "JS", "Dashboard certificates section — inline delete, image upload"],
@@ -353,7 +353,7 @@ function buildDocument() {
               ["public/js/dashboard-code.js", "JS", "Dashboard KEP code section — copy, share, QR download"],
               ["public/js/dashboard-delete-modal.js", "JS", "Dashboard delete confirmation modal — project deletes"],
               ["public/js/dashboard-init.js", "JS", "Dashboard initialization — auth guard, section pre-warm"],
-              ["public/js/explore.js", "JS", "Explore page controller — CASE code lookup"],
+              ["public/js/explore.js", "JS", "Explore page controller — KePolio code lookup"],
               ["public/js/profile.js", "JS", "Profile page controller — render public portfolio"],
               ["public/js/cloudinary.js", "JS", "Image upload — profile photos, project previews, certificates"],
               ["public/js/utils.js", "JS", "Shared utilities — toast, clipboard, QR, modals, animations"],
@@ -392,9 +392,9 @@ function buildDocument() {
           simpleTable(
             ["Operation", "Firestore Method", "Usage"],
             [
-              ["Read Document", "getDoc()", "Fetch user profile, lookup username/CASE code"],
+              ["Read Document", "getDoc()", "Fetch user profile, lookup username/KePolio code"],
               ["Read Collection", "getDocs() + query()", "Fetch projects, certificates, qualifications, experiences"],
-              ["Create Document", "setDoc()", "Create user profile, register username, generate CASE code"],
+              ["Create Document", "setDoc()", "Create user profile, register username, generate KePolio code"],
               ["Update Document", "updateDoc()", "Update profile fields, increment profile views"],
               ["Delete Document", "deleteDoc()", "Delete projects, certificates, qualifications, experiences"],
               ["Atomic Increment", "increment(1)", "Increment profile view counter atomically"],
@@ -433,7 +433,7 @@ function buildDocument() {
             ["Library", "Source", "Purpose"],
             [
               ["Firebase SDK v10.14.1", "gstatic.com CDN", "Authentication + Firestore client"],
-              ["QRCode.js", "jsdelivr CDN", "QR code generation for profile/CASE code sharing"],
+              ["QRCode.js", "jsdelivr CDN", "QR code generation for profile/KePolio code sharing"],
               ["Google Fonts", "fonts.googleapis.com", "DM Sans, Inter, Syne, JetBrains Mono typefaces"],
             ],
             [30, 30, 40]
@@ -468,7 +468,7 @@ function buildDocument() {
             ["Function", "Parameters", "Returns", "Purpose"],
             [
               ["getUser()", "—", "User object", "Fetch current user profile (cached)"],
-              ["createUser(userData)", "{fullName, username, photoURL?}", "{uid, ...user}", "Create Firestore user doc + username + CASE code"],
+              ["createUser(userData)", "{fullName, username, photoURL?}", "{uid, ...user}", "Create Firestore user doc + username + KePolio code"],
               ["updateUser(updates)", "{fullName?, bio?, ...}", "{uid, ...updates}", "Update profile (handles username changes)"],
               ["getProfileCompletion()", "—", "{percent, missing}", "Calculate profile completion %"],
               ["checkUsername(username)", "string", "{available, reason?}", "Validate + check uniqueness"],
@@ -488,7 +488,7 @@ function buildDocument() {
               ["addExperience(exp)", "{title, company, ...}", "{id, ...exp}", "Add experience"],
               ["updateExperience(id, upd)", "string, object", "{id, ...upd}", "Update experience"],
               ["deleteExperience(id)", "string", "void", "Delete experience"],
-              ["lookupProfile(query)", "string (code/username)", "{found, user?}", "Lookup by CASE code or username"],
+              ["lookupProfile(query)", "string (code/username)", "{found, user?}", "Lookup by KePolio code or username"],
               ["getPublicProfile(username)", "string", "{user, projects, ...}", "Full public profile + view increment"],
             ],
             [25, 22, 18, 35]
@@ -535,7 +535,7 @@ function buildDocument() {
               ["auth-page.js", "auth.html", "Login/signup form handling, card switching, Google OAuth flow, username validation"],
               ["dashboard-helpers.js", "dashboard.html", "Dashboard namespace, DOM selectors, shared inline-delete helper"],
               ["dashboard-nav.js", "dashboard.html", "Sidebar navigation, section switching, mobile toggle, logout"],
-              ["dashboard-overview.js", "dashboard.html", "Welcome banner, stats, CASE code panel, QR, share dropdown"],
+              ["dashboard-overview.js", "dashboard.html", "Welcome banner, stats, KePolio code panel, QR, share dropdown"],
               ["dashboard-profile.js", "dashboard.html", "Edit profile form, avatar upload, username live-check"],
               ["dashboard-projects.js", "dashboard.html", "Projects grid, add/edit modal, tags, image upload, save"],
               ["dashboard-certs.js", "dashboard.html", "Certificates list, inline delete, add with image upload"],
@@ -544,7 +544,7 @@ function buildDocument() {
               ["dashboard-code.js", "dashboard.html", "KEP code display, copy/share/QR, preview card"],
               ["dashboard-delete-modal.js", "dashboard.html", "Delete confirmation modal for projects"],
               ["dashboard-init.js", "dashboard.html", "Auth guard, init all modules, pre-warm data"],
-              ["explore.js", "explore.html", "CASE code input formatting, profile lookup, redirect"],
+              ["explore.js", "explore.html", "KePolio code input formatting, profile lookup, redirect"],
               ["profile.js", "profile.html", "Fetch & render public profile, owner detection, scroll animations, cert modal"],
               ["main.js", "index.html", "Particle animation, scroll reveals, entry sequence, navbar interactions"],
             ],
@@ -555,7 +555,7 @@ function buildDocument() {
           // ── 7. Database Schema ──
           heading("7. Database Schema & Design"),
           para(
-            "CASE uses Cloud Firestore, a NoSQL document database. Data is organized in collections and subcollections with O(1) lookup patterns for performance."
+            "KePolio uses Cloud Firestore, a NoSQL document database. Data is organized in collections and subcollections with O(1) lookup patterns for performance."
           ),
           emptyLine(),
 
@@ -568,7 +568,7 @@ function buildDocument() {
               ["users/{uid}/certificates", "{certId}", "Uploaded certificates", "Yes"],
               ["users/{uid}/qualifications", "{qualId}", "Education history", "Yes"],
               ["users/{uid}/experiences", "{expId}", "Work experience", "Yes"],
-              ["caseCodes", "{CASE-XXXXX}", "CASE code → uid lookup", "Yes"],
+              ["caseCodes", "{KePolio-XXXXX}", "KePolio code → uid lookup", "Yes"],
               ["usernames", "{username}", "Username → uid lookup", "Yes"],
             ],
             [25, 18, 37, 20]
@@ -584,7 +584,7 @@ function buildDocument() {
               ["bio", "string", "Short biography (max 160 characters)"],
               ["role", "string", "Professional role/title"],
               ["photoURL", "string", "Cloudinary URL for profile photo"],
-              ["caseCode", "string", "Auto-generated code (e.g., CASE-ABC12)"],
+              ["caseCode", "string", "Auto-generated code (e.g., KePolio-ABC12)"],
               ["socialLinks.github", "string", "GitHub profile URL"],
               ["socialLinks.linkedin", "string", "LinkedIn profile URL"],
               ["socialLinks.portfolio", "string", "Personal portfolio URL"],
@@ -693,7 +693,7 @@ function buildDocument() {
           // ── 9. Deployment & Infrastructure ──
           heading("9. Deployment & Infrastructure"),
           heading("9.1 Hosting: Vercel", HeadingLevel.HEADING_2),
-          para("CASE is deployed on Vercel as a static site with zero-configuration continuous deployment."),
+          para("KePolio is deployed on Vercel as a static site with zero-configuration continuous deployment."),
           bullet("Auto-deploy on git push — no CI/CD pipeline needed"),
           bullet("Global CDN — content served from edge nodes worldwide"),
           bullet("Automatic HTTPS with TLS 1.3"),
@@ -734,13 +734,13 @@ function buildDocument() {
           // ── 10. Performance & Load Capacity ──
           heading("10. Performance & Load Capacity"),
           para(
-            "CASE is architected for cost-efficiency and scalability. As a fully client-side application with no backend servers, load is distributed across managed services."
+            "KePolio is architected for cost-efficiency and scalability. As a fully client-side application with no backend servers, load is distributed across managed services."
           ),
           emptyLine(),
 
           heading("10.1 Firebase Spark Plan Limits", HeadingLevel.HEADING_2),
           simpleTable(
-            ["Resource", "Free Tier Limit", "Impact on CASE"],
+              ["Resource", "Free Tier Limit", "Impact on KePolio"],
             [
               ["Firestore Reads", "50,000 / day", "~2,500 full profile views/day (each view ≈ 20 reads)"],
               ["Firestore Writes", "20,000 / day", "~10,000 profile edits/day (each save ≈ 2 writes)"],
@@ -825,7 +825,7 @@ function buildDocument() {
               ["Syne", "700–800", "Display headlines (64–72px), section headers (40px)"],
               ["DM Sans", "400–500", "Body text (16–18px), form labels, descriptions"],
               ["Inter", "400–600", "UI elements, buttons, navigation"],
-              ["JetBrains Mono", "400", "CASE codes, code-related labels, monospace elements"],
+              ["JetBrains Mono", "400", "KePolio codes, code-related labels, monospace elements"],
             ],
             [25, 15, 60]
           ),
@@ -846,7 +846,7 @@ function buildDocument() {
           bullet("Redirected to /auth → chooses email/password or Google sign-in"),
           bullet("For email: enters full name, username (live validation), email, password"),
           bullet("For Google: OAuth popup → if new user, redirected to username picker"),
-          bullet("Account created in Firebase Auth → Firestore user doc created → CASE code generated"),
+          bullet("Account created in Firebase Auth → Firestore user doc created → KePolio code generated"),
           bullet("Username registered in usernames collection → redirected to /dashboard"),
           emptyLine(),
 
@@ -860,9 +860,9 @@ function buildDocument() {
           emptyLine(),
 
           heading("12.3 Profile Sharing & Discovery", HeadingLevel.HEADING_2),
-          bullet("User views CASE code on dashboard → copies code or downloads QR"),
+          bullet("User views KePolio code on dashboard → copies code or downloads QR"),
           bullet("Share via WhatsApp, email, or direct link copy"),
-          bullet("Recipient enters CASE code on /explore → profile found → redirect to /@username"),
+          bullet("Recipient enters KePolio code on /explore → profile found → redirect to /@username"),
           bullet("Public profile page renders: hero, social links, projects, certs, qualifications, experiences"),
           bullet("Profile view counter incremented atomically on each visit"),
           emptyLine(),
@@ -870,32 +870,32 @@ function buildDocument() {
           // ── 13. Future Monetization Strategies ──
           heading("13. Future Monetization Strategies"),
           para(
-            "CASE is currently 100% free and positioned as a student-first platform. The following monetization strategies are designed to generate revenue without compromising the core free experience."
+            "KePolio is currently 100% free and positioned as a student-first platform. The following monetization strategies are designed to generate revenue without compromising the core free experience."
           ),
           emptyLine(),
 
           heading("13.1 Freemium Model (Recommended)", HeadingLevel.HEADING_2),
-          para("Keep the core product free. Introduce a 'CASE Pro' subscription tier with premium features:", { bold: true }),
+          para("Keep the core product free. Introduce a 'KePolio Pro' subscription tier with premium features:", { bold: true }),
           simpleTable(
-            ["Feature", "Free Tier", "CASE Pro ($5–8/mo)"],
+            ["Feature", "Free Tier", "KePolio Pro ($5–8/mo)"],
             [
               ["Projects", "Up to 10", "Unlimited"],
               ["Certificates", "Up to 10", "Unlimited"],
-              ["Custom Domain", "Not available", "case.app redirects to yourdomain.com"],
+              ["Custom Domain", "Not available", "kepolio.in redirects to yourdomain.com"],
               ["Profile Analytics", "View count only", "Detailed analytics: visitors, referrers, clicks"],
               ["Custom Themes", "Default dark theme", "Light theme, custom colors, font choices"],
               ["Resume/PDF Export", "Not available", "Export portfolio as PDF/resume"],
               ["Priority Badge", "Not available", "'Pro' badge on profile"],
               ["Video Introductions", "Not available", "30-sec video embed on profile"],
-              ["Remove 'Built with CASE'", "Always shown", "Optional branding removal"],
+              ["Remove 'Built with KePolio'", "Always shown", "Optional branding removal"],
             ],
             [25, 30, 45]
           ),
           para("Estimated Revenue: $5/mo × 2% conversion × 10,000 users = $1,000/mo", { italics: true, color: GRAY }),
           emptyLine(),
 
-          heading("13.2 CASE for Teams / Organizations", HeadingLevel.HEADING_2),
-          para("Offer 'CASE for Teams' for coding bootcamps, universities, and training institutes:"),
+          heading("13.2 KePolio for Teams / Organizations", HeadingLevel.HEADING_2),
+          para("Offer 'KePolio for Teams' for coding bootcamps, universities, and training institutes:"),
           bullet("Bulk portfolio creation for students"),
           bullet("Admin dashboard for instructors to monitor student profiles"),
           bullet("Custom branding: institution logo, colors, landing page"),
@@ -929,7 +929,7 @@ function buildDocument() {
           emptyLine(),
 
           heading("13.6 API & White-Label Licensing", HeadingLevel.HEADING_2),
-          bullet("Offer CASE as a white-label solution for companies wanting internal portfolio tools"),
+          bullet("Offer KePolio as a white-label solution for companies wanting internal portfolio tools"),
           bullet("API access for third-party integrations ($29–99/mo based on usage)"),
           bullet("Embed widget: allow users to embed portfolio cards on personal websites/blogs"),
           emptyLine(),
@@ -938,8 +938,8 @@ function buildDocument() {
           simpleTable(
             ["Stream", "Conservative", "Moderate", "Optimistic"],
             [
-              ["CASE Pro Subscriptions", "$6,000/yr", "$24,000/yr", "$60,000/yr"],
-              ["CASE for Teams", "$12,000/yr", "$48,000/yr", "$120,000/yr"],
+              ["KePolio Pro Subscriptions", "$6,000/yr", "$24,000/yr", "$60,000/yr"],
+              ["KePolio for Teams", "$12,000/yr", "$48,000/yr", "$120,000/yr"],
               ["Recruiter Platform", "$0 (not yet built)", "$18,000/yr", "$60,000/yr"],
               ["Featured Profiles", "$2,400/yr", "$12,000/yr", "$36,000/yr"],
               ["Affiliate Revenue", "$1,200/yr", "$6,000/yr", "$18,000/yr"],
@@ -952,18 +952,18 @@ function buildDocument() {
           // ── 14. Conclusion ──
           heading("14. Conclusion"),
           para(
-            "CASE is a well-architected, lightweight portfolio platform that solves a genuine pain point for students and early-career professionals. Its serverless architecture ensures zero infrastructure maintenance, while managed services (Firebase, Cloudinary, Vercel) provide a scalable foundation that grows with demand."
+            "KePolio is a well-architected, lightweight portfolio platform that solves a genuine pain point for students and early-career professionals. Its serverless architecture ensures zero infrastructure maintenance, while managed services (Firebase, Cloudinary, Vercel) provide a scalable foundation that grows with demand."
           ),
           para(
             "The platform's current free-tier infrastructure can comfortably support 500–2,000 daily active users. Upgrading to paid tiers of Firebase (Blaze) and Cloudinary enables scaling to 50,000+ daily users without architectural changes."
           ),
           para(
-            "Multiple monetization paths exist — from a straightforward freemium model to B2B offerings for educational institutions and recruiters. The recommended approach is to launch CASE Pro ($5–8/mo) as the first revenue stream while building the recruiter platform as the highest-value long-term opportunity."
+            "Multiple monetization paths exist — from a straightforward freemium model to B2B offerings for educational institutions and recruiters. The recommended approach is to launch KePolio Pro ($5–8/mo) as the first revenue stream while building the recruiter platform as the highest-value long-term opportunity."
           ),
           emptyLine(),
           para("───────────────────────────────────────────", { alignment: AlignmentType.CENTER, color: GRAY }),
-          para("CASE — Code. Access. Share. Everywhere.", { alignment: AlignmentType.CENTER, bold: true, color: BLUE, size: 24 }),
-          para("admin.casev1@gmail.com", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
+          para("KePolio — Know Everyone's Portfolio", { alignment: AlignmentType.CENTER, bold: true, color: BLUE, size: 24 }),
+          para("support@kepolio.in", { alignment: AlignmentType.CENTER, color: GRAY, size: 20 }),
         ],
       },
     ],
@@ -977,7 +977,7 @@ function buildDocument() {
 async function main() {
   const doc = buildDocument();
   const buffer = await Packer.toBuffer(doc);
-  const outPath = path.join(__dirname, "..", "CASE_Project_Report.docx");
+  const outPath = path.join(__dirname, "..", "KePolio_Project_Report.docx");
   fs.writeFileSync(outPath, buffer);
   console.log(`Report generated: ${outPath}`);
   console.log(`File size: ${(buffer.length / 1024).toFixed(1)} KB`);

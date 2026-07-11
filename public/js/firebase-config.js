@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Firebase Configuration
+   KePolio — Firebase Configuration
    Initialize Firebase App, Auth & Firestore
    Reads keys from firebase-env.js (gitignored).
    ═══════════════════════════════════════════════════ */

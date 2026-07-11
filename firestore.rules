@@ -1,7 +1,7 @@
 rules_version = '2';
 
 // ═══════════════════════════════════════════════════
-// CASE — Firestore Security Rules
+// KePolio — Firestore Security Rules
 // Deploy with: firebase deploy --only firestore:rules
 // ═══════════════════════════════════════════════════
 
@@ -88,8 +88,8 @@ service cloud.firestore {
     }
 
     // ═══════════════════════════════════════
-    //  CASE CODES LOOKUP
-    //  caseCodes/{CASE-XXXXX} → { uid }
+    //  KEPOLIO CODES LOOKUP
+    //  caseCodes/{KePolio-XXXXX} → { uid }
     // ═══════════════════════════════════════
     match /caseCodes/{code} {
       // Anyone can read (needed for explore page lookup)

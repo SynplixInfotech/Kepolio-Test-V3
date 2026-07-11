@@ -14,12 +14,12 @@ test('public SEO control files are present and exclude private routes', () => {
     const sitemap = read('sitemap.xml');
     const manifest = JSON.parse(read('site.webmanifest'));
 
-    assert.match(robots, /Sitemap:\s*https:\/\/kepolio\.vercel\.app\/sitemap\.xml/);
+    assert.match(robots, /Sitemap:\s*https:\/\/www\.kepolio\.in\/sitemap\.xml/);
     assert.match(robots, /Disallow:\s*\/dashboard/);
     assert.match(robots, /Disallow:\s*\/auth/);
 
-    assert.match(sitemap, /<loc>https:\/\/kepolio\.vercel\.app\/<\/loc>/);
-    assert.match(sitemap, /<loc>https:\/\/kepolio\.vercel\.app\/about<\/loc>/);
+    assert.match(sitemap, /<loc>https:\/\/www\.kepolio\.in\/<\/loc>/);
+    assert.match(sitemap, /<loc>https:\/\/www\.kepolio\.in\/about<\/loc>/);
     assert.doesNotMatch(sitemap, /\/dashboard/);
     assert.doesNotMatch(sitemap, /\/auth/);
 
@@ -29,11 +29,11 @@ test('public SEO control files are present and exclude private routes', () => {
 
 test('indexable public pages include canonical, social metadata, and JSON-LD', () => {
     const pages = [
-        ['index.html', 'https://kepolio.vercel.app/'],
-        ['public/about.html', 'https://kepolio.vercel.app/about'],
-        ['public/explore.html', 'https://kepolio.vercel.app/explore'],
-        ['public/privacy.html', 'https://kepolio.vercel.app/privacy'],
-        ['public/terms.html', 'https://kepolio.vercel.app/terms'],
+        ['index.html', 'https://www.kepolio.in/'],
+        ['public/about.html', 'https://www.kepolio.in/about'],
+        ['public/explore.html', 'https://www.kepolio.in/explore'],
+        ['public/privacy.html', 'https://www.kepolio.in/privacy'],
+        ['public/terms.html', 'https://www.kepolio.in/terms'],
     ];
 
     for (const [file, canonicalUrl] of pages) {

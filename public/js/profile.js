@@ -165,7 +165,7 @@
             bioEl.style.display = 'none';
         }
 
-        // CASE code badge
+        // KePolio code badge
         const codeEl = document.getElementById('profileCaseCode');
         if (user.caseCode) {
             codeEl.textContent = user.caseCode;

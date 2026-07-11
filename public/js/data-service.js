@@ -67,7 +67,7 @@ const DataService = (() => {
 
     /**
      * Create a new user document after sign-up.
-     * Also registers the username and CASE code in lookup collections.
+     * Also registers the username and KePolio code in lookup collections.
      * @param {Object} userData — initial profile fields
      * @returns {Promise<Object>} created user
      */
@@ -565,19 +565,19 @@ const DataService = (() => {
     }
 
     // ═══════════════════════════════════════
-    //  CASE CODE / PUBLIC PROFILE LOOKUP
+    //  KEPOLIO CODE / PUBLIC PROFILE LOOKUP
     // ═══════════════════════════════════════
 
     /**
-     * Lookup a user by CASE code or username.
-     * @param {string} query — CASE code (e.g., "CASE-ABC12") or username
+     * Lookup a user by KePolio code or username.
+     * @param {string} query — KePolio code (e.g., "KePolio-ABC12") or username
      * @returns {Promise<Object>} { found, username, user }
      */
     async function lookupProfile(query) {
         const code = query.toUpperCase().replace(/\s/g, '');
         let uid = null;
 
-        // Try CASE code lookup first
+        // Try KePolio code lookup first
         const codeSnap = await db.collection('caseCodes').doc(code).get();
         if (codeSnap.exists) {
             uid = codeSnap.data().uid;
@@ -612,7 +612,7 @@ const DataService = (() => {
      * @returns {Promise<Object>} { found, user, projects, certificates }
      */
     async function getPublicProfile(username) {
-        // Resolve uid — try username first, then fall back to CASE code lookup
+        // Resolve uid — try username first, then fall back to KePolio code lookup
         let uid = null;
 
         const usernameSnap = await db.collection('usernames').doc(username.toLowerCase()).get();
@@ -620,7 +620,7 @@ const DataService = (() => {
             uid = usernameSnap.data().uid;
         }
 
-        // Fall back to CASE code (e.g. ?u=CASE-AB3XY shared directly)
+        // Fall back to KePolio code (e.g. ?u=KePolio-AB3XY shared directly)
         if (!uid) {
             const code = username.toUpperCase().replace(/\s/g, '');
             const codeSnap = await db.collection('caseCodes').doc(code).get();

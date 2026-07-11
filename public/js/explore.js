@@ -9,7 +9,7 @@
     const btn = document.getElementById('viewBtn');
     const error = document.getElementById('codeError');
 
-    // Auto-format as user types: add "CASE-" prefix handling
+    // Auto-format as user types: add "KePolio-" prefix handling
     input.addEventListener('input', () => {
         error.classList.remove('visible');
         input.classList.remove('explore__input--error');
@@ -37,8 +37,8 @@
             return;
         }
 
-        // Normalize: allow entering just the suffix (supports both KEP- and legacy CASE- codes)
-        if (!code.startsWith('KEP-') && !code.startsWith('CASE-') && code.length <= 5) {
+        // Normalize: allow entering just the suffix (supports both KEP- and legacy KePolio- codes)
+        if (!code.startsWith('KEP-') && !code.startsWith('KePolio-') && code.length <= 5) {
             code = 'KEP-' + code;
         }
 

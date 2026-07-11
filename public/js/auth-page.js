@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Auth Page Controller
+   KePolio — Auth Page Controller
    Handles form submissions, card toggling, and
    real-time username validation for auth.html.
    Requires: firebase-config.js, data-service.js,

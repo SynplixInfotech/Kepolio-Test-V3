@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CASE — Firebase Environment Variables (TEMPLATE)
+   KePolio — Firebase Environment Variables (TEMPLATE)
    Copy this file to firebase-env.js and fill in your keys.
    firebase-env.js is gitignored and will NOT be committed.
    ═══════════════════════════════════════════════════ */
