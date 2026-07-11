@@ -61,6 +61,11 @@
 
     Dashboard.initExperiences = function () {
         $('#addExpBtn')?.addEventListener('click', async () => {
+            const addBtn = $('#addExpBtn');
+            if (addBtn.disabled) return;
+            addBtn.disabled = true;
+            addBtn.innerHTML = '<span class="spinner"></span> Adding...';
+
             const title = $('#expTitle').value.trim();
             const company = $('#expCompany').value.trim();
             const duration = $('#expDuration').value.trim();
@@ -69,6 +74,8 @@
             const errors = ValidationUtils.validateExperience({ title, company, duration, description });
             if (errors.length) {
                 Utils.toast(errors[0], 'error');
+                addBtn.disabled = false;
+                addBtn.innerHTML = 'Add Experience';
                 return;
             }
 
@@ -82,6 +89,9 @@
                 Utils.toast('Experience added', 'success');
             } catch (err) {
                 Utils.toast(err.message || 'Something went wrong', 'error');
+            } finally {
+                addBtn.disabled = false;
+                addBtn.innerHTML = 'Add Experience';
             }
         });
     };

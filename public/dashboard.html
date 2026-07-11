@@ -578,7 +578,7 @@
   </div>
 
   <!-- ═══════════════ PROJECT MODAL ═══════════════ -->
-  <div class="modal-overlay" id="projectModal">
+  <div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle" aria-hidden="true">
     <div class="modal">
       <div class="modal__header">
         <h3 class="modal__title" id="projectModalTitle">Add Project</h3>
@@ -647,10 +647,10 @@
   </div>
 
   <!-- ═══════════════ DELETE CONFIRM MODAL ═══════════════ -->
-  <div class="modal-overlay" id="deleteModal">
+  <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal" style="max-width:380px;text-align:center">
       <div class="modal__header">
-        <h3 class="modal__title">Confirm Delete</h3>
+        <h3 class="modal__title" id="deleteModalTitle">Confirm Delete</h3>
         <button class="modal__close" id="deleteModalClose">✕</button>
       </div>
       <p style="color:var(--text-muted);margin-bottom:24px" id="deleteModalMsg">Are you sure you want to delete this
@@ -663,10 +663,10 @@
   </div>
 
   <!-- ═══════════════ DELETE ACCOUNT MODAL ═══════════════ -->
-  <div class="modal-overlay" id="deleteAccountModal">
+  <div class="modal-overlay" id="deleteAccountModal" role="dialog" aria-modal="true" aria-labelledby="deleteAccountModalTitle" aria-hidden="true">
     <div class="modal" style="max-width:420px">
       <div class="modal__header">
-        <h3 class="modal__title" style="color:var(--danger)">Delete Account</h3>
+        <h3 class="modal__title" id="deleteAccountModalTitle" style="color:var(--danger)">Delete Account</h3>
         <button class="modal__close" id="deleteAccountModalClose">✕</button>
       </div>
       <p style="color:var(--text-muted);margin-bottom:16px">

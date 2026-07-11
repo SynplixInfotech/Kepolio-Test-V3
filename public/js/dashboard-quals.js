@@ -61,6 +61,11 @@
 
     Dashboard.initQualifications = function () {
         $('#addQualBtn')?.addEventListener('click', async () => {
+            const addBtn = $('#addQualBtn');
+            if (addBtn.disabled) return;
+            addBtn.disabled = true;
+            addBtn.innerHTML = '<span class="spinner"></span> Adding...';
+
             const degree = $('#qualDegree').value.trim();
             const institution = $('#qualInstitution').value.trim();
             const year = $('#qualYear').value.trim();
@@ -69,6 +74,8 @@
             const errors = ValidationUtils.validateQualification({ degree, institution, year, grade });
             if (errors.length) {
                 Utils.toast(errors[0], 'error');
+                addBtn.disabled = false;
+                addBtn.innerHTML = 'Add Qualification';
                 return;
             }
 
@@ -82,6 +89,9 @@
                 Utils.toast('Qualification added', 'success');
             } catch (err) {
                 Utils.toast(err.message || 'Something went wrong', 'error');
+            } finally {
+                addBtn.disabled = false;
+                addBtn.innerHTML = 'Add Qualification';
             }
         });
     };

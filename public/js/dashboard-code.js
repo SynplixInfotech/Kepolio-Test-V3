@@ -30,7 +30,7 @@
             DataService.getProjects(),
             DataService.getCertificates(),
         ]);
-        const profileUrl = `kepolio.app/@${user.username}`;
+        const profileUrl = window.location.origin + `/@${user.username}`;
         const fullUrl = window.location.origin + `/@${user.username}`;
 
         $('#caseCodeDisplay').textContent = user.caseCode || '---';

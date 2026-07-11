@@ -404,6 +404,22 @@ const DataService = (() => {
     }
 
     /**
+     * Update an existing certificate.
+     * @param {string} id — certificate document id
+     * @param {Object} updates — fields to merge
+     * @returns {Promise<Object>}
+     */
+    async function updateCertificate(id, updates) {
+        const ref = _userRef().collection('certificates').doc(id);
+        await ref.update({
+            ...updates,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        _cacheInvalidate('certificates');
+        return { id, ...updates };
+    }
+
+    /**
      * Delete a certificate.
      * @param {string} id
      */
@@ -703,6 +719,7 @@ const DataService = (() => {
         deleteProject,
         getCertificates,
         addCertificate,
+        updateCertificate,
         deleteCertificate,
         getQualifications,
         addQualification,

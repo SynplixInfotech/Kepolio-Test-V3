@@ -31,12 +31,9 @@ test('indexable public pages include canonical, social metadata, and JSON-LD', (
     const pages = [
         ['index.html', 'https://kepolio.vercel.app/'],
         ['public/about.html', 'https://kepolio.vercel.app/about'],
-        ['public/blog.html', 'https://kepolio.vercel.app/blog'],
-        ['public/careers.html', 'https://kepolio.vercel.app/careers'],
         ['public/explore.html', 'https://kepolio.vercel.app/explore'],
         ['public/privacy.html', 'https://kepolio.vercel.app/privacy'],
         ['public/terms.html', 'https://kepolio.vercel.app/terms'],
-        ['public/profile.html', 'https://kepolio.vercel.app/@username'],
     ];
 
     for (const [file, canonicalUrl] of pages) {

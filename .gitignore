@@ -50,5 +50,4 @@ playwright.config.js
 scripts/test-server.js
 test-results/
 .antigravity/
-firestore.rules
 Firestore

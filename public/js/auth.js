@@ -62,21 +62,26 @@ const AuthService = (() => {
             throw new Error('Username must be 3-20 characters: lowercase letters, numbers, underscores only.');
         }
 
-        // Check username availability before creating auth account
-        const usernameSnap = await FirebaseConfig.db.collection('usernames').doc(username).get();
-        if (usernameSnap.exists) {
-            throw new Error('Username is already taken. Try another one.');
-        }
-
         // Create Firebase Auth account
         const cred = await auth.createUserWithEmailAndPassword(email, password);
 
-        // Update display name in Auth
-        await cred.user.updateProfile({ displayName: fullName });
+        try {
+            // Update display name in Auth
+            await cred.user.updateProfile({ displayName: fullName });
 
-        // Create Firestore user document
-        const profile = await DataService.createUser({ fullName, username });
-        return profile;
+            // Create Firestore user document (transaction handles username uniqueness)
+            const profile = await DataService.createUser({ fullName, username });
+            return profile;
+        } catch (firestoreError) {
+            // Rollback: delete the orphaned auth account if Firestore creation fails
+            try {
+                await cred.user.delete();
+            } catch (_) {
+                // If rollback fails, log but don't throw — the Firestore error is the primary concern
+                console.error('Failed to rollback orphaned auth account:', _);
+            }
+            throw firestoreError;
+        }
     }
 
     /**
@@ -86,8 +91,12 @@ const AuthService = (() => {
      * @returns {Promise<Object>} Firebase user
      */
     async function login(email, password) {
-        const cred = await auth.signInWithEmailAndPassword(email, password);
-        return cred.user;
+        try {
+            const cred = await auth.signInWithEmailAndPassword(email, password);
+            return cred.user;
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
     }
 
     /**
@@ -120,12 +129,9 @@ const AuthService = (() => {
             throw new Error('Username must be 3-20 characters: lowercase letters, numbers, underscores only.');
         }
 
-        const usernameSnap = await FirebaseConfig.db.collection('usernames').doc(username).get();
-        if (usernameSnap.exists) {
-            throw new Error('Username is already taken. Try another one.');
-        }
-
         const user = auth.currentUser;
+        if (!user) throw new Error('Not authenticated.');
+
         const fullName = user.displayName || '';
         const profile = await DataService.createUser({
             fullName,

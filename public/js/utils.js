@@ -13,9 +13,11 @@ const Utils = (() => {
 
         const el = document.createElement('div');
         el.className = `case-toast case-toast--${type}`;
+        el.setAttribute('role', 'alert');
+        el.setAttribute('aria-live', 'polite');
         el.innerHTML = `
             <span class="case-toast__icon">${type === 'success' ? '✓' : '✗'}</span>
-            <span class="case-toast__msg">${message}</span>
+            <span class="case-toast__msg">${Utils.escapeHTML(message)}</span>
         `;
         document.body.appendChild(el);
 
@@ -155,14 +157,73 @@ const Utils = (() => {
     }
 
     // ── Modal Helpers ──
+    let _lastFocusedElement = null;
+    let _activeModalTrap = null;
+
+    function _getFocusableElements(container) {
+        return container.querySelectorAll(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+    }
+
+    function _trapFocus(e) {
+        if (!_activeModalTrap) return;
+        const focusable = _getFocusableElements(_activeModalTrap);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.key === 'Tab') {
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+    }
+
     function openModal(modal) {
+        _lastFocusedElement = document.activeElement;
         modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+
+        // Set up ARIA attributes
+        if (!modal.getAttribute('role')) modal.setAttribute('role', 'dialog');
+        if (!modal.getAttribute('aria-modal')) modal.setAttribute('aria-modal', 'true');
+
+        // Set up focus trap
+        _activeModalTrap = modal;
+        document.addEventListener('keydown', _trapFocus);
+
+        // Focus first focusable element
+        requestAnimationFrame(() => {
+            const focusable = _getFocusableElements(modal);
+            if (focusable.length > 0) {
+                focusable[0].focus();
+            }
+        });
     }
 
     function closeModal(modal) {
         modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+
+        // Remove focus trap
+        _activeModalTrap = null;
+        document.removeEventListener('keydown', _trapFocus);
+
+        // Restore focus
+        if (_lastFocusedElement && typeof _lastFocusedElement.focus === 'function') {
+            _lastFocusedElement.focus();
+            _lastFocusedElement = null;
+        }
     }
 
     // ── Debounce ──
@@ -191,6 +252,11 @@ const Utils = (() => {
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
+    }
+
+    // ── Get initials from a name ──
+    function getInitials(name) {
+        return (name || 'U').split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
     }
 
     // ── Format a YYYY-MM-DD date string for display (e.g. "Jan 2024") ──
@@ -228,6 +294,7 @@ const Utils = (() => {
         formatDate,
         timeAgo,
         escapeHTML,
+        getInitials,
         shareWhatsApp,
         shareEmail,
     };

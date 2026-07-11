@@ -46,6 +46,22 @@
             const file = e.target.files[0];
             if (!file) return;
 
+            // Validate file type
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                Utils.toast('Please upload a JPEG, PNG, or WebP image.', 'error');
+                e.target.value = '';
+                return;
+            }
+
+            // Validate file size (5MB max)
+            const maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                Utils.toast('Image must be under 5MB.', 'error');
+                e.target.value = '';
+                return;
+            }
+
             const btn = $('#avatarBtn');
             btn.textContent = 'Uploading...';
             btn.disabled = true;
@@ -100,28 +116,69 @@
             saveBtn.disabled = true;
 
             try {
+                const fullName = $('#inputName').value.trim();
+                const username = $('#inputUsername').value.trim();
+                const bio = $('#inputBio').value.trim();
+                const role = $('#inputRole').value.trim();
+
+                // Validate required fields
+                if (!fullName) {
+                    throw new Error('Full name is required.');
+                }
+                if (!ValidationUtils.isValidPlainText(fullName, { min: 1, max: 100 })) {
+                    throw new Error('Full name must be 1-100 characters with no special characters.');
+                }
+                if (!username) {
+                    throw new Error('Username is required.');
+                }
+                if (!ValidationUtils.isValidUsername(username)) {
+                    throw new Error('Username must be 3-20 characters: lowercase letters, numbers, underscores only.');
+                }
+                if (bio && !ValidationUtils.isValidPlainText(bio, { min: 0, max: 500 })) {
+                    throw new Error('Bio must be under 500 characters with no special characters.');
+                }
+                if (role && !ValidationUtils.isValidPlainText(role, { min: 0, max: 100 })) {
+                    throw new Error('Role must be under 100 characters.');
+                }
+
+                // Check username availability
+                const usernameCheck = await DataService.checkUsername(username);
+                if (!usernameCheck.available) {
+                    throw new Error('Username is already taken. Try another one.');
+                }
+
+                // Validate and normalize social links
+                const rawSocialLinks = {
+                    github: $('#inputGithub').value.trim(),
+                    linkedin: $('#inputLinkedin').value.trim(),
+                    portfolio: $('#inputPortfolio').value.trim(),
+                    twitter: $('#inputTwitter').value.trim(),
+                    instagram: $('#inputInstagram').value.trim(),
+                    youtube: $('#inputYoutube').value.trim(),
+                    leetcode: $('#inputLeetcode').value.trim(),
+                    hackerrank: $('#inputHackerrank').value.trim(),
+                    whatsapp: $('#inputWhatsapp').value.trim(),
+                    telegram: $('#inputTelegram').value.trim(),
+                };
+
+                let socialLinks;
+                try {
+                    socialLinks = ValidationUtils.normalizeSocialLinks(rawSocialLinks);
+                } catch (err) {
+                    throw new Error(err.message || 'Invalid social link.');
+                }
+
                 await DataService.updateUser({
-                    fullName: $('#inputName').value.trim(),
-                    username: $('#inputUsername').value.trim(),
-                    bio: $('#inputBio').value.trim(),
-                    role: $('#inputRole').value.trim(),
-                    socialLinks: {
-                        github: $('#inputGithub').value.trim(),
-                        linkedin: $('#inputLinkedin').value.trim(),
-                        portfolio: $('#inputPortfolio').value.trim(),
-                        twitter: $('#inputTwitter').value.trim(),
-                        instagram: $('#inputInstagram').value.trim(),
-                        youtube: $('#inputYoutube').value.trim(),
-                        leetcode: $('#inputLeetcode').value.trim(),
-                        hackerrank: $('#inputHackerrank').value.trim(),
-                        whatsapp: $('#inputWhatsapp').value.trim(),
-                        telegram: $('#inputTelegram').value.trim(),
-                    },
+                    fullName,
+                    username,
+                    bio,
+                    role,
+                    socialLinks,
                 });
 
                 Utils.toast('Profile updated', 'success');
             } catch (err) {
-                Utils.toast('Something went wrong. Try again.', 'error');
+                Utils.toast(err.message || 'Something went wrong. Try again.', 'error');
             } finally {
                 saveBtn.innerHTML = 'Save Changes';
                 saveBtn.disabled = false;

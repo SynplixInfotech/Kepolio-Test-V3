@@ -142,11 +142,35 @@ button {
   font-family: var(--font-body);
   cursor: pointer;
   border: none;
-  outline: none;
 }
 
 input, textarea, select {
   font-family: var(--font-body);
+}
+
+/* Accessible focus styles — visible on keyboard navigation, hidden for mouse users */
+:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(94, 106, 210, 0.25);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(94, 106, 210, 0.15);
+}
+
+/* Remove outline for mouse/touch users */
+:focus:not(:focus-visible) {
   outline: none;
 }
 
