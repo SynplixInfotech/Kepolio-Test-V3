@@ -120,6 +120,7 @@ const DataService = (() => {
                 socialLinks: { github: '', linkedin: '', portfolio: '', twitter: '', instagram: '', youtube: '', leetcode: '', hackerrank: '', whatsapp: '', telegram: '' },
                 caseCode,
                 stats: { profileViews: 0 },
+                template: 'minimal',
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             };
@@ -153,6 +154,12 @@ const DataService = (() => {
 
         if (Object.prototype.hasOwnProperty.call(normalizedUpdates, 'socialLinks')) {
             normalizedUpdates.socialLinks = ValidationUtils.normalizeSocialLinks(normalizedUpdates.socialLinks || {});
+        }
+
+        if (Object.prototype.hasOwnProperty.call(normalizedUpdates, 'template')) {
+            if (!ValidationUtils.isValidTemplate(normalizedUpdates.template)) {
+                throw new Error('Invalid template. Choose from: minimal, professional, creative, academic.');
+            }
         }
 
         // If username is changing, update the usernames collection

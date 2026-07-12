@@ -91,6 +91,9 @@
 
             updateProfileSeo(data);
 
+            // Apply template class
+            applyUserTemplate(data.user.template || 'minimal');
+
             // Clone template into container
             const template = document.getElementById('profileTemplate');
             const content = template.content.cloneNode(true);
@@ -120,6 +123,13 @@
             hideProfileLoader();
             showNotFound();
         }
+    }
+
+    /* ═══════════════ TEMPLATE ═══════════════ */
+    function applyUserTemplate(template) {
+        const validTemplates = ['minimal', 'professional', 'creative', 'academic'];
+        const safe = validTemplates.includes(template) ? template : 'minimal';
+        container.className = 'profile template-' + safe;
     }
 
     /* ═══════════════ OWNER DETECTION ═══════════════ */

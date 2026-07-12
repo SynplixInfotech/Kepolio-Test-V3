@@ -38,6 +38,10 @@
         $('#bioCount').textContent = (user.bio || '').length;
         updateAvatarPreview(user);
         $('#usernamePreview').textContent = user.username || 'username';
+
+        const template = user.template || 'minimal';
+        const templateRadio = document.querySelector(`input[name="template"][value="${template}"]`);
+        if (templateRadio) templateRadio.checked = true;
     };
 
     Dashboard.initEditProfile = function () {
@@ -174,6 +178,7 @@
                     bio,
                     role,
                     socialLinks,
+                    template: document.querySelector('input[name="template"]:checked')?.value || 'minimal',
                 });
 
                 Utils.toast('Profile updated', 'success');

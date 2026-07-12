@@ -161,6 +161,12 @@
         return errors;
     }
 
+    const VALID_TEMPLATES = ['minimal', 'professional', 'creative', 'academic'];
+
+    function isValidTemplate(template) {
+        return VALID_TEMPLATES.includes(template);
+    }
+
     return {
         normalizeUsername,
         isValidUsername,
@@ -173,5 +179,6 @@
         validateExperience,
         validateCertificate,
         isValidCertDate,
+        isValidTemplate,
     };
 });

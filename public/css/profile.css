@@ -1104,6 +1104,10 @@
   .cert-modal__content { max-height: 85vh; }
   .profile-btn { min-height: 44px; }
   .topbar__cta { min-height: 44px; padding: 8px 16px; }
+  .template-creative .pub-projects-grid { grid-template-columns: 1fr; }
+  .template-creative .pub-project-card__preview { height: 140px; }
+  .template-professional .social-links-grid { flex-direction: row; flex-wrap: wrap; }
+  .template-professional .social-link-card { flex: 1 1 calc(50% - 8px); min-width: 140px; }
 }
 
 @media (max-width: 640px) {
@@ -1160,4 +1164,168 @@
   .journey-node__dot { left: -24px; }
   .journey-card { padding: 12px 14px; }
   .journey-card__title { font-size: 14px; }
+}
+
+/* ═══════════════════════════════════════
+   TEMPLATE OVERRIDES
+   ═══════════════════════════════════════ */
+
+/* Minimal — base styles are the default */
+
+/* Professional */
+.template-professional .profile-hero {
+  text-align: left;
+  padding-bottom: var(--space-4);
+}
+.template-professional .profile-hero__photo {
+  margin: 0;
+}
+.template-professional .profile-hero__glow {
+  opacity: 0.4;
+}
+.template-professional .social-links-grid {
+  flex-direction: column;
+}
+.template-professional .social-link-card {
+  flex-direction: row;
+  padding: 14px 16px;
+  gap: 12px;
+}
+.template-professional .social-link-card__icon {
+  width: 36px;
+  height: 36px;
+}
+.template-professional .pub-projects-grid {
+  grid-template-columns: 1fr;
+}
+.template-professional .pub-certs-grid {
+  grid-template-columns: 1fr;
+}
+.template-professional .pub-quals-grid {
+  grid-template-columns: 1fr;
+}
+.template-professional .profile-section {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.02);
+}
+.template-professional .profile-section__title {
+  text-align: left;
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Creative */
+.template-creative .profile-hero__glow {
+  opacity: 1;
+  width: 400px;
+  height: 400px;
+}
+.template-creative .profile-hero__photo {
+  width: 130px;
+  height: 130px;
+  border-width: 4px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(59, 130, 246, 0.15);
+}
+.template-creative .pub-projects-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.template-creative .pub-project-card {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
+}
+.template-creative .pub-project-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow-card-hover);
+}
+.template-creative .pub-project-card__preview {
+  height: 180px;
+}
+.template-creative .pub-cert-card {
+  border-radius: var(--radius-card);
+}
+.template-creative .pub-cert-card__preview {
+  height: 160px;
+}
+.template-creative .social-link-card {
+  border-radius: var(--radius-card);
+}
+.template-creative .profile-section__title {
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+/* Academic */
+.template-academic .profile {
+  max-width: 780px;
+}
+.template-academic .profile-hero {
+  text-align: left;
+  padding: var(--space-4) 0 var(--space-3);
+}
+.template-academic .profile-hero__photo {
+  width: 80px;
+  height: 80px;
+  margin: 0;
+}
+.template-academic .profile-hero__glow {
+  display: none;
+}
+.template-academic .profile-hero__name {
+  font-size: 24px;
+}
+.template-academic .social-links-grid {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.template-academic .social-link-card {
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+.template-academic .social-link-card__icon {
+  width: 28px;
+  height: 28px;
+}
+.template-academic .profile-section__title {
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid var(--border-subtle);
+  padding-bottom: var(--space-1);
+}
+.template-academic .pub-project-card {
+  border-radius: 6px;
+}
+.template-academic .pub-project-card__tags {
+  font-size: 12px;
+}
+.template-academic .tag {
+  font-size: 11px;
+  padding: 3px 8px;
+}
+.template-academic .pub-cert-card {
+  border-radius: 6px;
+}
+.template-academic .pub-cert-card__meta {
+  font-style: italic;
+}
+.template-academic .pub-qual-card,
+.template-academic .pub-exp-card {
+  border-radius: 6px;
+}
+.template-academic .journey-card__type-badge {
+  text-transform: lowercase;
+  font-size: 11px;
+  border-radius: 4px;
+}
+.template-academic .journey-card {
+  border-radius: 6px;
+}
+.template-academic .profile-footer {
+  border-top: 2px solid var(--border-subtle);
 }
